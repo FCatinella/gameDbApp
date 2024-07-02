@@ -23,7 +23,7 @@ private const val CLIENT_ID_PARAMETER_KEY = "client_id"
 private const val CLIENT_SECRET_PARAMETER_KEY = "client_secret"
 private const val GRANT_TYPE_PARAMETER_KEY = "grant_type"
 
-class NetworkClientBuilder {
+object NetworkClientBuilder {
 
     fun buildSimpleClient(): HttpClient {
         return HttpClient(OkHttp.create { }).config {
@@ -38,7 +38,7 @@ class NetworkClientBuilder {
         }
     }
 
-    fun buildAuthenticatedClient(httpClient: HttpClient): HttpClient {
+    fun buildAuthenticatedClient(httpClient: HttpClient, tokenManager: TokenManager): HttpClient {
         val refreshingTokenClient = httpClient.config { }
 
         return httpClient.config {
@@ -51,7 +51,8 @@ class NetworkClientBuilder {
             install(Auth) {
                 bearer {
                     loadTokens {
-                        BearerTokens("", "")
+                        val accessToken = tokenManager.getAccessToken() ?: return@loadTokens null
+                        BearerTokens(accessToken, "")
                     }
                     refreshTokens {
                         val result = refreshingTokenClient.post {
@@ -64,7 +65,12 @@ class NetworkClientBuilder {
                             parameter(CLIENT_SECRET_PARAMETER_KEY, BuildConfig.CLIENT_SECRET)
                             parameter(GRANT_TYPE_PARAMETER_KEY, "client_credentials")
                         }
-                        val token = result.body<TokenResult>()
+                        val token = try {
+                            result.body<TokenResult>()
+                        } catch (e: Exception) {
+                            return@refreshTokens null
+                        }
+                        tokenManager.saveAccessToken(token.accessToken)
                         BearerTokens(token.accessToken, "")
                     }
                 }
