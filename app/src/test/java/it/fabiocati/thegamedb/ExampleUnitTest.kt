@@ -1,4 +1,4 @@
-package it.fabiocati.thegamedb
+package com.fabiocati.thegamedb
 
 import org.junit.Test
 

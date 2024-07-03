@@ -1,10 +1,10 @@
 package it.fabiocati.thegamedb.di
 
-import io.ktor.client.HttpClient
 import it.fabiocati.thegamedb.data.network.NetworkClientBuilder
+import it.fabiocati.thegamedb.data.network.TokenManager
+import io.ktor.client.HttpClient
 import it.fabiocati.thegamedb.data.network.TheGameDbService
 import it.fabiocati.thegamedb.data.network.TheGameDbServiceImpl
-import it.fabiocati.thegamedb.data.network.TokenManager
 import it.fabiocati.thegamedb.data.network.TokenManagerImpl
 import it.fabiocati.thegamedb.data.storage.LocalStorage
 import org.koin.core.qualifier.named
