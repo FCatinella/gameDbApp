@@ -74,6 +74,9 @@ dependencies {
     implementation(libs.ktor.contentNegotiation)
     implementation(libs.ktor.serialization.json)
 
+    implementation(libs.compose.destinations.core)
+    ksp(libs.compose.destinations.ksp)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
