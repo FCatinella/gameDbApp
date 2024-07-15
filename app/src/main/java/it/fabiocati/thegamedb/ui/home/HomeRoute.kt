@@ -1,21 +1,21 @@
 package it.fabiocati.thegamedb.ui.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
-import it.fabiocati.thegamedb.domain.model.Game
+import org.koin.androidx.compose.koinViewModel
 
 @Destination<RootGraph>(start = true)
 @Composable
-fun HomeRoute() {
-    val games = listOf(
-        Game(id = "001", name = "Dragon Ball: Sparking! Zero", coverUrl = null),
-        Game(id = "001", name = "Dragon Ball: Sparking! Zero", coverUrl = null),
-        Game(id = "001", name = "Dragon Ball: Sparking! Zero", coverUrl = null),
-        Game(id = "001", name = "Dragon Ball: Sparking! Zero", coverUrl = null)
-    )
+fun HomeRoute(
+    homeViewModel: HomeViewModel = koinViewModel()
+) {
+    val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
     HomeScreen(
-        uiState = HomeUiState(games = games)
+        uiState = uiState,
     )
 }
 

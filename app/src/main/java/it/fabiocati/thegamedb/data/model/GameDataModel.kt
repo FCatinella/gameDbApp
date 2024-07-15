@@ -11,4 +11,6 @@ data class GameDataModel(
     val name: String,
     @SerialName("cover")
     val cover: Int? = null,
+    @SerialName("screenshots")
+    val screenshots: List<Int> = emptyList()
 )
