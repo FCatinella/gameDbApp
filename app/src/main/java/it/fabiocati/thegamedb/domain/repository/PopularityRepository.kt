@@ -6,5 +6,5 @@ import it.fabiocati.thegamedb.domain.model.PopularityPrimitive
 
 interface PopularityRepository {
 
-    suspend fun getPopular(limit: Int, offset: Int = 0, popularityType: PopularityType, sortMode: SortMode = SortMode.DESC): List<PopularityPrimitive>
+    suspend fun getPopular(limit: Int, popularityType: PopularityType, sortMode: SortMode = SortMode.DESC): List<PopularityPrimitive>
 }

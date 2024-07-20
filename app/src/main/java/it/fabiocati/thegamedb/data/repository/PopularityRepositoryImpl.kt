@@ -9,7 +9,7 @@ import it.fabiocati.thegamedb.domain.repository.PopularityRepository
 class PopularityRepositoryImpl(
     private val gameDbService: TheGameDbService
 ) : PopularityRepository {
-    override suspend fun getPopular(limit: Int, offset: Int, popularityType: PopularityType, sortMode: SortMode): List<PopularityPrimitive> {
+    override suspend fun getPopular(limit: Int, popularityType: PopularityType, sortMode: SortMode): List<PopularityPrimitive> {
         val popularityPrimitiveDataModel = gameDbService.getPopular(popularityType = popularityType.id, sort = sortMode.raw, limit = limit)
         return popularityPrimitiveDataModel.map {
             PopularityPrimitive(

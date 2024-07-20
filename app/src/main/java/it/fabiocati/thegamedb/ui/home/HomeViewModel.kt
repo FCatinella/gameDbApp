@@ -25,7 +25,7 @@ class HomeViewModel(
 
     fun getGames() {
         viewModelScope.launch(Dispatchers.IO) {
-            val popularGames = popularityRepository.getPopular(limit = 10, popularityType = PopularityType.WANT_TO_PLAY)
+            val popularGames = popularityRepository.getPopular(limit = 10, offset = 10, popularityType = PopularityType.WANT_TO_PLAY)
             val games = gamesRepository.getGames(limit = 10, gameIds = popularGames.map { it.gameId })
 
             _uiState.update {
