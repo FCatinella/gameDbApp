@@ -12,5 +12,7 @@ data class GameDataModel(
     @SerialName("cover")
     val cover: Int? = null,
     @SerialName("screenshots")
-    val screenshots: List<Int> = emptyList()
+    val screenshots: List<Int> = emptyList(),
+    @SerialName("artworks")
+    val artworks: List<Int> = emptyList()
 )

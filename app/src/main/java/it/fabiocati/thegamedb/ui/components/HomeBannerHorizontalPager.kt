@@ -58,7 +58,7 @@ private fun HomeBannerElement(
                 .aspectRatio(1.5f)
         ) {
             GameDbImage(
-                model = game.screenshotsUrl.firstOrNull() ?: "",
+                model = game.artworkUrls.firstOrNull() ?: game.screenshotUrls.firstOrNull() ?: game.coverUrl ?: "",
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
