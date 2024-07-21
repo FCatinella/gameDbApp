@@ -17,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun GameDbImage(
-    model: String,
+    model: Any?,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     isCrossFadeEnable: Boolean = true,

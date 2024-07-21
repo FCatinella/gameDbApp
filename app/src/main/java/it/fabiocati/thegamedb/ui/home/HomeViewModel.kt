@@ -20,16 +20,52 @@ class HomeViewModel(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getGames()
+        getWantedGames()
+        getMostPlayedGames()
+        getMostVisitedGames()
+        getMostPlayingGames()
     }
 
-    fun getGames() {
+    fun getWantedGames() {
         viewModelScope.launch(Dispatchers.IO) {
-            val popularGames = popularityRepository.getPopular(limit = 10, popularityType = PopularityType.WANT_TO_PLAY)
-            val games = gamesRepository.getGames(limit = 10, gameIds = popularGames.map { it.gameId })
+            val popularGames = popularityRepository.getPopular(limit = 15, popularityType = PopularityType.WANT_TO_PLAY)
+            val games = gamesRepository.getGames(limit = popularGames.size, gameIds = popularGames.map { it.gameId })
 
             _uiState.update {
-                it.copy(games = games)
+                it.copy(wantedToPlayGames = games)
+            }
+        }
+    }
+
+    fun getMostPlayedGames() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val popularGames = popularityRepository.getPopular(limit = 15, popularityType = PopularityType.PLAYED)
+            val games = gamesRepository.getGames(limit = popularGames.size, gameIds = popularGames.map { it.gameId })
+
+            _uiState.update {
+                it.copy(mostPlayedGames = games)
+            }
+        }
+    }
+
+    fun getMostVisitedGames() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val popularGames = popularityRepository.getPopular(limit = 15, popularityType = PopularityType.VISITS)
+            val games = gamesRepository.getGames(limit = popularGames.size, gameIds = popularGames.map { it.gameId })
+
+            _uiState.update {
+                it.copy(mostVisitedGames = games)
+            }
+        }
+    }
+
+    fun getMostPlayingGames() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val popularGames = popularityRepository.getPopular(limit = 15, popularityType = PopularityType.PLAYING)
+            val games = gamesRepository.getGames(limit = popularGames.size, gameIds = popularGames.map { it.gameId })
+
+            _uiState.update {
+                it.copy(nowPlayingGames = games)
             }
         }
     }
