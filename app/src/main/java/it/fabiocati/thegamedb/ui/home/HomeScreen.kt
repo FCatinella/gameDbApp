@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,11 +52,12 @@ fun HomeScreen(
                     GameDbImage(
                         model = context.resourceUri(R.drawable.igdb_logo),
                         previewResourceId = R.drawable.igdb_logo,
+                        isCrossFadeEnable = false,
                         modifier = Modifier
                             .width(80.dp)
                             .height(60.dp)
                             .align(Alignment.Center)
-                            .padding(top = 16.dp)
+                            .padding(top = 8.dp)
                     )
                 }
             }
@@ -63,13 +65,22 @@ fun HomeScreen(
                 HomeBannerHorizontalPager(games = uiState.wantedToPlayGames)
             }
             item {
-                HomeCoverHorizontalList(games = uiState.mostPlayedGames)
+                HomeCoverHorizontalList(
+                    title = stringResource(R.string.most_played),
+                    games = uiState.mostPlayedGames
+                )
             }
             item {
-                HomeCoverHorizontalList(games = uiState.nowPlayingGames)
+                HomeCoverHorizontalList(
+                    title = stringResource(R.string.now_playing),
+                    games = uiState.nowPlayingGames,
+                )
             }
             item {
-                HomeCoverHorizontalList(games = uiState.mostVisitedGames)
+                HomeCoverHorizontalList(
+                    title = stringResource(R.string.most_visited),
+                    games = uiState.mostVisitedGames
+                )
             }
         }
     }
