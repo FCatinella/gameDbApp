@@ -39,7 +39,7 @@ internal class TheGameDbServiceImpl(
                 }
             }
 
-            setBody("fields id,cover,name,screenshots,artworks,involved_companies; limit $limit; offset $offset; sort rating desc;$whereString")
+            setBody("fields id,cover,name,screenshots,artworks,involved_companies,first_release_date; limit $limit; offset $offset; sort rating desc;$whereString")
         }
         return result.body()
     }
@@ -58,7 +58,7 @@ internal class TheGameDbServiceImpl(
                 path("v4/covers")
             }
             val idsString = coverIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields *; where id = (${idsString}); limit 500;")
+            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
         }
         return result.body()
     }
@@ -72,7 +72,7 @@ internal class TheGameDbServiceImpl(
                 path("v4/screenshots")
             }
             val idsString = screenshotIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields *; where id = (${idsString}); limit 500;")
+            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
         }
         return result.body()
     }
@@ -86,7 +86,7 @@ internal class TheGameDbServiceImpl(
                 path("v4/artworks")
             }
             val idsString = artworksIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields *; where id = (${idsString}); limit 500;")
+            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
         }
         return result.body()
     }
@@ -100,7 +100,7 @@ internal class TheGameDbServiceImpl(
                 path("v4/involved_companies")
             }
             val idsString = involvedCompaniesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields *; where id = (${idsString}); limit 500;")
+            setBody("fields id, company, developer, game; where id = (${idsString}); limit 500;")
         }
         return result.body()
     }
@@ -114,7 +114,7 @@ internal class TheGameDbServiceImpl(
                 path("v4/companies")
             }
             val idsString = companiesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields *; where id = (${idsString}); limit 500;")
+            setBody("fields id, name; where id = (${idsString}); limit 500;")
         }
         return result.body()
     }

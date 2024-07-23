@@ -10,6 +10,7 @@ import it.fabiocati.thegamedb.domain.repository.GamesRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.datetime.LocalDate
 
 class GamesRepositoryImpl(
     private val gameDbService: TheGameDbService
@@ -67,7 +68,8 @@ private fun List<GameDataModel>.toGameList(
             coverUrl = coverUrl,
             screenshotUrls = screenshots,
             artworkUrls = artworks,
-            developmentCompany = companies.firstOrNull()?.name
+            developmentCompany = companies.firstOrNull()?.name,
+            dateOfRelease = gameDataModel.firstReleaseDate?.let { LocalDate.fromEpochDays(it.toInt() / 60 / 60 / 24) },
         )
     }
 

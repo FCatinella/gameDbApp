@@ -17,4 +17,6 @@ data class GameDataModel(
     val artworks: List<Int> = emptyList(),
     @SerialName("involved_companies")
     val involvedCompanies: List<Int> = emptyList(),
+    @SerialName("first_release_date")
+    val firstReleaseDate: String? = null,
 )

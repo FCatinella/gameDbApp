@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
+import kotlinx.datetime.LocalDate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -112,7 +113,7 @@ private fun HomeBannerElement(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "${game.dateOfRelease?.year} - ${game.genre}, Western",
+                    text = "${game.dateOfRelease?.year ?: "N/A"}",
                     style = TextStyle(
                         fontWeight = FontWeight.Light,
                         fontSize = 12.sp,
@@ -131,7 +132,12 @@ private fun HomeBannerElement(
 @Composable
 private fun HomeBannerHorizontalPagerPreview() {
     val games = listOf(
-        Game(id = "Tommy", name = "Red Dead Redemption 2", coverUrl = null),
+        Game(
+            id = "Tommy", name = "Red Dead Redemption 2",
+            coverUrl = null,
+            dateOfRelease = LocalDate(year = 2018, monthNumber = 1, dayOfMonth = 1),
+            developmentCompany = "Rockstar Games"
+        ),
         Game(id = "Tommy", name = "Red Dead Redemption 2", coverUrl = null),
         Game(id = "Tommy", name = "Red Dead Redemption 2", coverUrl = null),
         Game(id = "Tommy", name = "Red Dead Redemption 2", coverUrl = null),
@@ -145,7 +151,13 @@ private fun HomeBannerHorizontalPagerPreview() {
 @Preview(Devices.PIXEL_5)
 @Composable
 private fun HomeBannerElementPreview() {
-    val game = Game(id = "Tommy", name = "Dragon ball: Sparking! Zero", coverUrl = null)
+    val game = Game(
+        id = "Tommy",
+        name = "Dragon ball: Sparking! Zero",
+        coverUrl = null,
+        dateOfRelease = LocalDate(year = 2018, monthNumber = 1, dayOfMonth = 1),
+        developmentCompany = "Bandai Namco"
+    )
     TheGameDbTheme {
         HomeBannerElement(game)
 
