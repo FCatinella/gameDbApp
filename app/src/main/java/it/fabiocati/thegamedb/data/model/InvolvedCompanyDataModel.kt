@@ -8,7 +8,7 @@ data class InvolvedCompanyDataModel(
     @SerialName("id")
     val id : Int,
     @SerialName("company")
-    val companyId: Int,
+    val company: CompanyDataModel,
     @SerialName("developer")
     val developer: Boolean,
     @SerialName("game")

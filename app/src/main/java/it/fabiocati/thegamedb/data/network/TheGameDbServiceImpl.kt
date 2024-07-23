@@ -39,7 +39,7 @@ internal class TheGameDbServiceImpl(
                 }
             }
 
-            setBody("fields id,cover,name,screenshots,artworks,involved_companies,first_release_date; limit $limit; offset $offset; sort rating desc;$whereString")
+            setBody("fields id ,cover.*, name, screenshots.*,artworks.* ,involved_companies.company.*,involved_companies.developer, involved_companies.game,first_release_date; limit $limit; offset $offset; sort rating desc;$whereString")
         }
         return result.body()
     }

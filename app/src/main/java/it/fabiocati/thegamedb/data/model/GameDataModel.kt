@@ -10,13 +10,13 @@ data class GameDataModel(
     @SerialName("name")
     val name: String,
     @SerialName("cover")
-    val cover: Int? = null,
+    val cover: ImageDataModel? = null,
     @SerialName("screenshots")
-    val screenshots: List<Int> = emptyList(),
+    val screenshots: List<ImageDataModel> = emptyList(),
     @SerialName("artworks")
-    val artworks: List<Int> = emptyList(),
+    val artworks: List<ImageDataModel> = emptyList(),
     @SerialName("involved_companies")
-    val involvedCompanies: List<Int> = emptyList(),
+    val involvedCompanies: List<InvolvedCompanyDataModel> = emptyList(),
     @SerialName("first_release_date")
     val firstReleaseDate: String? = null,
 )
