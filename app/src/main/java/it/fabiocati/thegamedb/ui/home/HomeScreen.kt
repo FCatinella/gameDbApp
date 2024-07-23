@@ -1,13 +1,14 @@
 package it.fabiocati.thegamedb.ui.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
@@ -28,6 +29,7 @@ import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.ui.components.GameDbImage
 import it.fabiocati.thegamedb.ui.components.HomeBannerHorizontalPager
 import it.fabiocati.thegamedb.ui.components.HomeCoverHorizontalList
+import it.fabiocati.thegamedb.ui.components.PlatformSection
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 import it.fabiocati.thegamedb.utils.extensions.resourceUri
 
@@ -54,15 +56,20 @@ fun HomeScreen(
                         previewResourceId = R.drawable.igdb_logo,
                         isCrossFadeEnable = false,
                         modifier = Modifier
-                            .width(80.dp)
-                            .height(60.dp)
+                            .width(100.dp)
+                            .aspectRatio(2.1f)
                             .align(Alignment.Center)
-                            .padding(top = 8.dp)
+                            .padding(top = 6.dp)
                     )
                 }
             }
             item {
                 HomeBannerHorizontalPager(games = uiState.wantedToPlayGames)
+            }
+            item {
+                PlatformSection(
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                )
             }
             item {
                 HomeCoverHorizontalList(
@@ -85,7 +92,7 @@ fun HomeScreen(
         }
     }
 }
-
+@Preview(device = Devices.PIXEL_5, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(device = Devices.PIXEL_5)
 @Composable
 private fun HomeScreenPreview() {

@@ -2,7 +2,7 @@ package it.fabiocati.thegamedb.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import it.fabiocati.thegamedb.data.model.PopularityType
+import it.fabiocati.thegamedb.domain.model.PopularityType
 import it.fabiocati.thegamedb.domain.usecase.GetPopularGamesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

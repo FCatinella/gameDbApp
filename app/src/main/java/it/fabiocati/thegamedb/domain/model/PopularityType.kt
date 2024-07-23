@@ -1,4 +1,4 @@
-package it.fabiocati.thegamedb.data.model
+package it.fabiocati.thegamedb.domain.model
 
 enum class PopularityType(val id: Int) {
     VISITS(1),

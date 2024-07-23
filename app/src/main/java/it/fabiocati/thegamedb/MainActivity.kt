@@ -25,22 +25,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TheGameDbTheme {
-        Greeting("Android")
-    }
-}
-
 object KoinFactory {
     inline fun <reified T> get(): T = KoinPlatformTools.defaultContext().get().get(clazz = T::class)
 }

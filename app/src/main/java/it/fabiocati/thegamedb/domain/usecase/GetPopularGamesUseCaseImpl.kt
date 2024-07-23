@@ -1,6 +1,6 @@
 package it.fabiocati.thegamedb.domain.usecase
 
-import it.fabiocati.thegamedb.data.model.PopularityType
+import it.fabiocati.thegamedb.domain.model.PopularityType
 import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.domain.repository.GamesRepository
 import it.fabiocati.thegamedb.domain.repository.PopularityRepository

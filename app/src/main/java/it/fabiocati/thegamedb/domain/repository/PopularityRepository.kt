@@ -1,6 +1,6 @@
 package it.fabiocati.thegamedb.domain.repository
 
-import it.fabiocati.thegamedb.data.model.PopularityType
+import it.fabiocati.thegamedb.domain.model.PopularityType
 import it.fabiocati.thegamedb.data.model.SortMode
 import it.fabiocati.thegamedb.domain.model.PopularityPrimitive
 

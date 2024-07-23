@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -26,6 +27,7 @@ fun GameDbImage(
     onLoading: () -> Unit = {},
     onSuccess: (DataSource) -> Unit = {},
     previewResourceId: Int = R.drawable.preview_background_image,
+    colorFilter: ColorFilter? = null
 ) {
     val context = LocalContext.current
 
@@ -60,6 +62,7 @@ fun GameDbImage(
         painter = painter,
         contentScale = contentScale,
         contentDescription = contentDescription,
-        modifier = modifier
+        colorFilter = colorFilter,
+        modifier = modifier,
     )
 }
