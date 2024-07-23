@@ -7,9 +7,11 @@ import io.ktor.client.request.setBody
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
+import it.fabiocati.thegamedb.data.model.CompanyDataModel
 import it.fabiocati.thegamedb.data.model.GameDataModel
 import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
 import it.fabiocati.thegamedb.data.model.ImageDataModel
+import it.fabiocati.thegamedb.data.model.InvolvedCompanyDataModel
 import it.fabiocati.thegamedb.data.model.PopularityPrimitiveDataModel
 
 internal class TheGameDbServiceImpl(
@@ -37,7 +39,7 @@ internal class TheGameDbServiceImpl(
                 }
             }
 
-            setBody("fields id,cover,name,screenshots,artworks; limit $limit; offset $offset; sort rating desc;$whereString")
+            setBody("fields id,cover,name,screenshots,artworks,involved_companies; limit $limit; offset $offset; sort rating desc;$whereString")
         }
         return result.body()
     }
@@ -84,6 +86,34 @@ internal class TheGameDbServiceImpl(
                 path("v4/artworks")
             }
             val idsString = artworksIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
+            setBody("fields *; where id = (${idsString}); limit 500;")
+        }
+        return result.body()
+    }
+
+    override suspend fun getInvolvedCompanies(vararg involvedCompaniesIds: Int): List<InvolvedCompanyDataModel> {
+        val result = httpClient.post {
+            method = HttpMethod.Post
+            this.url {
+                protocol = URLProtocol.HTTPS
+                host = "api.igdb.com"
+                path("v4/involved_companies")
+            }
+            val idsString = involvedCompaniesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
+            setBody("fields *; where id = (${idsString}); limit 500;")
+        }
+        return result.body()
+    }
+
+    override suspend fun getCompanies(vararg companiesIds: Int): List<CompanyDataModel> {
+        val result = httpClient.post {
+            method = HttpMethod.Post
+            this.url {
+                protocol = URLProtocol.HTTPS
+                host = "api.igdb.com"
+                path("v4/companies")
+            }
+            val idsString = companiesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
             setBody("fields *; where id = (${idsString}); limit 500;")
         }
         return result.body()

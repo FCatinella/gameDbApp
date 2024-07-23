@@ -102,7 +102,7 @@ private fun HomeBannerElement(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Rockstar games",
+                    text = game.developmentCompany ?: "",
                     style = TextStyle(
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
@@ -112,7 +112,7 @@ private fun HomeBannerElement(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "2017 - Fantasy, Western",
+                    text = "${game.dateOfRelease?.year} - ${game.genre}, Western",
                     style = TextStyle(
                         fontWeight = FontWeight.Light,
                         fontSize = 12.sp,
