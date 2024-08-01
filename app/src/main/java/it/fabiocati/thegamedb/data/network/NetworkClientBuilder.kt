@@ -16,6 +16,7 @@ import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import it.fabiocati.thegamedb.BuildConfig
 import it.fabiocati.thegamedb.data.model.TokenResult
+import it.fabiocati.thegamedb.data.network.ktorPlugins.RateLimitPlugin
 import kotlinx.serialization.json.Json
 
 private const val CLIENT_ID_HEADER_KEY = "Client-ID"
@@ -35,6 +36,7 @@ object NetworkClientBuilder {
                     }
                 )
             }
+            install(RateLimitPlugin)
         }
     }
 
