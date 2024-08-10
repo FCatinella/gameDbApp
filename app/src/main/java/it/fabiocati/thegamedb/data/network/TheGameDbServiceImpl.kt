@@ -46,75 +46,22 @@ internal class TheGameDbServiceImpl(
 
 
     override suspend fun getGameDetail(gameId: Int): GameDetailsDataModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getCovers(vararg coverIds: Int): List<ImageDataModel> {
         val result = httpClient.post {
             method = HttpMethod.Post
             this.url {
                 protocol = URLProtocol.HTTPS
                 host = "api.igdb.com"
-                path("v4/covers")
+                path("v4/games")
             }
-            val idsString = coverIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getScreenshots(vararg screenshotIds: Int): List<ImageDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/screenshots")
-            }
-            val idsString = screenshotIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getArtworks(vararg artworksIds: Int): List<ImageDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/artworks")
-            }
-            val idsString = artworksIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getInvolvedCompanies(vararg involvedCompaniesIds: Int): List<InvolvedCompanyDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/involved_companies")
-            }
-            val idsString = involvedCompaniesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id, company, developer, game; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getCompanies(vararg companiesIds: Int): List<CompanyDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/companies")
-            }
-            val idsString = companiesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id, name; where id = (${idsString}); limit 500;")
+            setBody(
+                """
+                fields 
+                    id,
+                    name; 
+                where 
+                    id = $gameId; 
+                limit 1;""".trimIndent()
+            )
         }
         return result.body()
     }

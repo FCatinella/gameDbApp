@@ -1,6 +1,7 @@
 package it.fabiocati.thegamedb.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +22,7 @@ import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 fun HomeCoverHorizontalList(
     title: String,
     games: List<Game>,
+    onGamePressed: (game: Game) -> Unit
 ) {
     Column {
         Text(
@@ -36,7 +38,13 @@ fun HomeCoverHorizontalList(
             items(games) { game ->
                 GameCover(
                     game = game,
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp)
+                        .clickable(
+                            onClick = {
+                                onGamePressed(game)
+                            },
+                        )
                 )
             }
         }
@@ -58,7 +66,8 @@ private fun HomeCoverHorizontalListPreview() {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)) {
             HomeCoverHorizontalList(
                 title = "Games",
-                games = games
+                games = games,
+                onGamePressed = {}
             )
         }
     }

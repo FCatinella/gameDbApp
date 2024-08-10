@@ -37,6 +37,7 @@ import it.fabiocati.thegamedb.utils.extensions.resourceUri
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
+    onGamePressed: (Game) -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -74,42 +75,40 @@ fun HomeScreen(
             item {
                 HomeCoverHorizontalList(
                     title = stringResource(R.string.most_played),
-                    games = uiState.mostPlayedGames
+                    games = uiState.mostPlayedGames,
+                    onGamePressed = onGamePressed,
                 )
             }
             item {
                 HomeCoverHorizontalList(
                     title = stringResource(R.string.now_playing),
                     games = uiState.nowPlayingGames,
+                    onGamePressed = onGamePressed,
                 )
             }
             item {
                 HomeCoverHorizontalList(
                     title = stringResource(R.string.most_visited),
-                    games = uiState.mostVisitedGames
+                    games = uiState.mostVisitedGames,
+                    onGamePressed = onGamePressed,
                 )
             }
         }
     }
 }
+
 @Preview(device = Devices.PIXEL_5, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(device = Devices.PIXEL_5)
 @Composable
 private fun HomeScreenPreview() {
     val games = listOf(
-        Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null),
-        Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null),
-        Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null),
-        Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null)
+        Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null), Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null), Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null), Game(id = "001", name = "Red Dead Redemption 2", coverUrl = null)
     )
     val uiState = HomeUiState(
-        wantedToPlayGames = games,
-        mostPlayedGames = games,
-        nowPlayingGames = games,
-        mostVisitedGames = games
+        wantedToPlayGames = games, mostPlayedGames = games, nowPlayingGames = games, mostVisitedGames = games
     )
     TheGameDbTheme {
-        HomeScreen(uiState = uiState)
+        HomeScreen(uiState = uiState, onGamePressed = {})
     }
 }
 

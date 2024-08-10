@@ -1,10 +1,8 @@
 package it.fabiocati.thegamedb.domain.model
 
 import kotlinx.datetime.LocalDate
-import kotlinx.serialization.Serializable
 
-@Serializable
-data class Game(
+data class GameDetails(
     val id: String,
     val name: String,
     val coverUrl: String? = null,
