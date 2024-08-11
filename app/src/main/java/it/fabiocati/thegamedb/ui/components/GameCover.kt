@@ -1,6 +1,5 @@
 package it.fabiocati.thegamedb.ui.components
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,12 +16,12 @@ import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 fun GameCover(
     game: Game,
     modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.FillHeight
 ) {
     GameDbImage(
         model = game.coverUrl ?: "",
-        contentScale = ContentScale.FillHeight,
+        contentScale = contentScale,
         modifier = modifier
-            .size(width = 120.dp, height = 160.dp)
             .clip(
                 RoundedCornerShape(4.dp)
             ),

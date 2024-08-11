@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -39,6 +40,7 @@ fun HomeCoverHorizontalList(
                 GameCover(
                     game = game,
                     modifier = Modifier
+                        .size(width = 120.dp, height = 160.dp)
                         .padding(horizontal = 4.dp)
                         .clickable(
                             onClick = {
