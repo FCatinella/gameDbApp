@@ -63,7 +63,7 @@ internal class TheGameDbServiceImpl(
                 limit 1;""".trimIndent()
             )
         }
-        return result.body()
+        return result.body<List<GameDetailsDataModel>>().first()
     }
 
     override suspend fun getPopular(popularityType: Int, sort: String, limit: Int): List<PopularityPrimitiveDataModel> {

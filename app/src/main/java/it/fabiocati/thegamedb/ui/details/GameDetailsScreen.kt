@@ -24,7 +24,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,25 +44,24 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import it.fabiocati.thegamedb.domain.model.Game
+import it.fabiocati.thegamedb.domain.model.GameDetails
 import it.fabiocati.thegamedb.ui.components.ActionButton
 import it.fabiocati.thegamedb.ui.components.AgeRatingBox
 import it.fabiocati.thegamedb.ui.components.BackButton
 import it.fabiocati.thegamedb.ui.components.GameDbImage
 import it.fabiocati.thegamedb.ui.components.GameDbTabRow
+import it.fabiocati.thegamedb.ui.components.LoadingText
 import it.fabiocati.thegamedb.ui.components.SecondaryButton
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 import it.fabiocati.thegamedb.utils.extensions.getTopDp
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
-@Destination<RootGraph>
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun GameDetailsScreen(
-    game: Game
+    gameDetails: GameDetails?,
+    onBackPressed: () -> Unit,
 ) {
 
     val colorStops = arrayOf(
@@ -85,7 +83,7 @@ fun GameDetailsScreen(
         ) {
             item {
                 GameDbImage(
-                    model = game.artworkUrls.lastOrNull(),
+                    model = gameDetails?.artworkUrls?.lastOrNull(),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .drawWithContent {
@@ -97,11 +95,14 @@ fun GameDetailsScreen(
                 )
             }
             item {
-                Text(
-                    text = game.name,
-                    style = MaterialTheme.typography.headlineLarge.copy(MaterialTheme.colorScheme.onSurfaceVariant),
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
+                LoadingText(
+                    text = gameDetails?.name,
+                    placeholderText = "The Last of Us part 2",
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold
+                    ),
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.6f)
                         .offset(y = (-24).dp)
@@ -113,7 +114,7 @@ fun GameDetailsScreen(
                     modifier = Modifier.offset(y = (-20).dp)
                 ) {
                     Text(
-                        text = "${game.dateOfRelease?.year ?: "N/A"}",
+                        text = "${gameDetails?.dateOfRelease?.year ?: "N/A"}",
                         style = TextStyle(
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
@@ -133,7 +134,7 @@ fun GameDetailsScreen(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = game.developmentCompany ?: "",
+                        text = gameDetails?.developmentCompany ?: "",
                         style = TextStyle(
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
@@ -246,7 +247,8 @@ fun GameDetailsScreen(
         BackButton(
             modifier = Modifier
                 .padding(top = WindowInsets.statusBars.getTopDp())
-                .padding(8.dp)
+                .padding(8.dp),
+            onClick = onBackPressed
         )
     }
 }
@@ -255,7 +257,7 @@ fun GameDetailsScreen(
 @Composable
 private fun GameDetailsScreenPreview() {
     TheGameDbTheme {
-        val game = Game(
+        val game = GameDetails(
             id = "001",
             name = "Red Dead Redemption 2",
             coverUrl = null,
@@ -263,7 +265,8 @@ private fun GameDetailsScreenPreview() {
             dateOfRelease = LocalDate.fromEpochDays(0)
         )
         GameDetailsScreen(
-            game = game
+            gameDetails = game,
+            onBackPressed = {}
         )
     }
 }

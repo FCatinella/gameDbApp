@@ -38,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ActionButton(
     modifier: Modifier = Modifier,
@@ -65,7 +64,7 @@ fun ActionButton(
                 contentDescription = text
             }
             .clickable {
-
+                onClick()
             },
         contentAlignment = Alignment.Center
     ) {

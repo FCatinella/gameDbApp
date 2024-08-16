@@ -1,26 +1,29 @@
 package it.fabiocati.thegamedb.data.repository
 
 import it.fabiocati.thegamedb.data.model.GameDataModel
+import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
 import it.fabiocati.thegamedb.data.network.TheGameDbService
 import it.fabiocati.thegamedb.domain.model.Game
+import it.fabiocati.thegamedb.domain.model.GameDetails
 import it.fabiocati.thegamedb.domain.repository.GamesRepository
-import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.LocalDate
 
 class GamesRepositoryImpl(
     private val gameDbService: TheGameDbService
 ) : GamesRepository {
 
-    override suspend fun getGames(limit: Int, offset: Int, gameIds: List<Int>): List<Game> = coroutineScope {
+    override suspend fun getGames(limit: Int, offset: Int, gameIds: List<Int>): List<Game> {
         val gamesDataModels = gameDbService.getGames(limit = limit, offset = offset, gameIds = gameIds)
+        return gamesDataModels.toGameList()
+    }
 
-        return@coroutineScope gamesDataModels.toGameList(
-        )
+    override suspend fun getGameDetails(gameId: Int): GameDetails {
+        val gameDataModel = gameDbService.getGameDetail(gameId = gameId)
+        return gameDataModel.toModel()
     }
 }
 
-private fun List<GameDataModel>.toGameList(
-): List<Game> =
+private fun List<GameDataModel>.toGameList(): List<Game> =
     this.map { gameDataModel ->
         val cover = gameDataModel.cover
         val coverUrl = cover?.url?.getImageUrl()
@@ -40,5 +43,11 @@ private fun List<GameDataModel>.toGameList(
         )
     }
 
+
+private fun GameDetailsDataModel.toModel(): GameDetails =
+    GameDetails(
+        id = this.id.toString(),
+        name = this.name
+    )
 
 private fun String.getImageUrl(): String = this.replace("//", "https://").replace("t_thumb", "t_1080p")
