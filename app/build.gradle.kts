@@ -24,6 +24,9 @@ android {
     }
 
     buildTypes {
+        debug{
+            isDebuggable = false
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -69,6 +72,8 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+    implementation (libs.androidx.material.icons.extended)
+
 
     implementation(libs.ktor.client)
     implementation(libs.ktor.auth)
