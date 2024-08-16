@@ -8,5 +8,11 @@ data class GameDetailsDataModel(
     @SerialName("id")
     val id: Int,
     @SerialName("name")
-    val name: String
+    val name: String,
+    @SerialName("artworks")
+    val artworks: List<ImageDataModel> = emptyList(),
+    @SerialName("first_release_date")
+    val firstReleaseDate: String? = null,
+    @SerialName("involved_companies")
+    val involvedCompanies: List<InvolvedCompanyDataModel> = emptyList(),
 )

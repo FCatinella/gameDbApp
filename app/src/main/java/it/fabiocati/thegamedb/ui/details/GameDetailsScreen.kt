@@ -111,16 +111,18 @@ fun GameDetailsScreen(
             item {
                 FlowRow(
                     verticalArrangement = Arrangement.Center,
+                    horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.offset(y = (-20).dp)
                 ) {
-                    Text(
-                        text = "${gameDetails?.dateOfRelease?.year ?: "N/A"}",
+                    LoadingText(
+                        text = gameDetails?.let { "${gameDetails.dateOfRelease?.year ?: "N/A"}" },
+                        placeholderText = "2018",
                         style = TextStyle(
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        ),
-                        textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center
+                        )
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -133,14 +135,15 @@ fun GameDetailsScreen(
                         textAlign = TextAlign.Center,
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = gameDetails?.developmentCompany ?: "",
+                    LoadingText(
+                        text = gameDetails?.let { gameDetails.developmentCompany ?: "N/A" },
+                        placeholderText = "Naughty Dog",
                         style = TextStyle(
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center
                         ),
-                        textAlign = TextAlign.Center,
                     )
                 }
             }

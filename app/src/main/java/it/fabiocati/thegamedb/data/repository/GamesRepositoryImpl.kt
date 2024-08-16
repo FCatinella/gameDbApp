@@ -44,10 +44,17 @@ private fun List<GameDataModel>.toGameList(): List<Game> =
     }
 
 
-private fun GameDetailsDataModel.toModel(): GameDetails =
-    GameDetails(
+private fun GameDetailsDataModel.toModel(): GameDetails {
+    val artworks = this.artworks.map { it.url.getImageUrl() }
+    val companies = this.involvedCompanies.map { it.company }
+    val dateOfRelease = this.firstReleaseDate?.let { LocalDate.fromEpochDays(it.toInt() / 60 / 60 / 24) }
+    return GameDetails(
         id = this.id.toString(),
-        name = this.name
+        name = this.name,
+        artworkUrls = artworks,
+        dateOfRelease = dateOfRelease,
+        developmentCompany = companies.firstOrNull()?.name,
     )
+}
 
 private fun String.getImageUrl(): String = this.replace("//", "https://").replace("t_thumb", "t_1080p")

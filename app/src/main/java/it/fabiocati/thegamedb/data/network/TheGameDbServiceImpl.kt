@@ -57,7 +57,12 @@ internal class TheGameDbServiceImpl(
                 """
                 fields 
                     id,
-                    name; 
+                    name,
+                    artworks.*,
+                    involved_companies.company.*,
+                    involved_companies.developer,
+                    involved_companies.game,
+                    first_release_date; 
                 where 
                     id = $gameId; 
                 limit 1;""".trimIndent()
