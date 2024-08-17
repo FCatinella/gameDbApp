@@ -11,5 +11,7 @@ data class GameDetails(
     val developmentCompany: String? = null,
     val genre: String? = null,
     val dateOfRelease: LocalDate? = null,
-    val platforms : List<Platform> = emptyList()
+    val platforms: List<Platform> = emptyList(),
+    val url: String? = null,
+    val youtubeUrl: String? = null
 )

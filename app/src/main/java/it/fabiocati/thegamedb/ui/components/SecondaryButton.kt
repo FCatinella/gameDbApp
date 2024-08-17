@@ -1,5 +1,6 @@
 package it.fabiocati.thegamedb.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,12 +25,14 @@ import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 fun SecondaryButton(
     iconVector: ImageVector,
     text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .padding(4.dp)
-            .padding(horizontal = 2.dp),
+            .padding(horizontal = 2.dp)
+            .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
@@ -55,7 +58,8 @@ private fun SecondaryButtonPreview() {
     TheGameDbTheme {
         SecondaryButton(
             iconVector = Icons.Default.Movie,
-            text = "Trailer"
+            text = "Trailer",
+            onClick = {}
         )
     }
 }

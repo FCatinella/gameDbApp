@@ -45,8 +45,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import it.fabiocati.thegamedb.domain.model.GameDetails
+import it.fabiocati.thegamedb.domain.model.Platform
 import it.fabiocati.thegamedb.ui.components.ActionButton
-import it.fabiocati.thegamedb.ui.components.AgeRatingBox
+import it.fabiocati.thegamedb.ui.components.PlatformBox
 import it.fabiocati.thegamedb.ui.components.BackButton
 import it.fabiocati.thegamedb.ui.components.GameDbImage
 import it.fabiocati.thegamedb.ui.components.GameDbTabRow
@@ -61,6 +62,9 @@ import kotlinx.datetime.LocalDate
 @Composable
 fun GameDetailsScreen(
     gameDetails: GameDetails?,
+    onPlatformPressed: (Platform) -> Unit,
+    onWebsitePressed: (String) -> Unit,
+    onTrailerPressed: (String) -> Unit,
     onBackPressed: () -> Unit,
 ) {
 
@@ -154,9 +158,12 @@ fun GameDetailsScreen(
                     modifier = Modifier.offset(y = (-14).dp)
                 ) {
                     platformList.forEach {
-                        AgeRatingBox(
+                        PlatformBox(
                             text = it.abbreviation,
-                            modifier = Modifier.padding(4.dp)
+                            modifier = Modifier.padding(4.dp),
+                            onClick = {
+                                onPlatformPressed(it)
+                            }
                         )
                     }
                 }
@@ -174,13 +181,15 @@ fun GameDetailsScreen(
                     SecondaryButton(
                         iconVector = Icons.Default.Link,
                         text = "Website",
-                        modifier = Modifier.padding(10.dp)
+                        modifier = Modifier.padding(10.dp),
+                        onClick = { gameDetails?.url?.let { url -> onWebsitePressed(url) } }
                     )
 
                     SecondaryButton(
                         iconVector = Icons.Default.Movie,
                         text = "Trailer",
-                        modifier = Modifier.padding(10.dp)
+                        modifier = Modifier.padding(10.dp),
+                        onClick = { gameDetails?.youtubeUrl?.let { url -> onTrailerPressed(url) } }
                     )
                 }
 
@@ -269,6 +278,9 @@ private fun GameDetailsScreenPreview() {
         )
         GameDetailsScreen(
             gameDetails = game,
+            onPlatformPressed = {},
+            onWebsitePressed = {},
+            onTrailerPressed = {},
             onBackPressed = {}
         )
     }

@@ -16,5 +16,9 @@ data class GameDetailsDataModel(
     @SerialName("involved_companies")
     val involvedCompanies: List<InvolvedCompanyDataModel> = emptyList(),
     @SerialName("platforms")
-    val platforms : List<PlatformDataModel> = emptyList()
+    val platforms: List<PlatformDataModel> = emptyList(),
+    @SerialName("websites")
+    val websites: List<WebsiteDataModel> = emptyList(),
+    @SerialName("videos")
+    val gameVideos: List<GameVideoDataModel> = emptyList(),
 )

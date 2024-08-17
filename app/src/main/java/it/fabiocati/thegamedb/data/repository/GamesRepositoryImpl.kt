@@ -2,6 +2,7 @@ package it.fabiocati.thegamedb.data.repository
 
 import it.fabiocati.thegamedb.data.model.GameDataModel
 import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
+import it.fabiocati.thegamedb.data.model.GameVideoDataModel
 import it.fabiocati.thegamedb.data.model.PlatformDataModel
 import it.fabiocati.thegamedb.data.network.TheGameDbService
 import it.fabiocati.thegamedb.domain.model.Game
@@ -56,7 +57,13 @@ private fun GameDetailsDataModel.toModel(): GameDetails {
         artworkUrls = artworks,
         dateOfRelease = dateOfRelease,
         developmentCompany = companies.firstOrNull()?.name,
-        platforms = this.platforms.filter { it.abbreviation != null }.map { it.toModel() }
+        platforms = this.platforms.filter { it.abbreviation != null }.map { it.toModel() },
+        url = this.websites.firstOrNull {
+            //Category 1 means this is the official website url
+            //see https://api-docs.igdb.com/?shell#website
+            it.category == 1
+        }?.url,
+        youtubeUrl = this.gameVideos.firstOrNull()?.getYoutubeUrl()
     )
 }
 
@@ -67,5 +74,9 @@ private fun PlatformDataModel.toModel(): Platform =
         name = name,
         url = url
     )
+
+private fun GameVideoDataModel.getYoutubeUrl(): String {
+    return "https://youtube.com/watch?v=${this.videoId}"
+}
 
 private fun String.getImageUrl(): String = this.replace("//", "https://").replace("t_thumb", "t_1080p")
