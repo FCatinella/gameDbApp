@@ -15,4 +15,6 @@ data class GameDetailsDataModel(
     val firstReleaseDate: String? = null,
     @SerialName("involved_companies")
     val involvedCompanies: List<InvolvedCompanyDataModel> = emptyList(),
+    @SerialName("platforms")
+    val platforms : List<PlatformDataModel> = emptyList()
 )

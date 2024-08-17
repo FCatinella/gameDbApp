@@ -2,9 +2,11 @@ package it.fabiocati.thegamedb.data.repository
 
 import it.fabiocati.thegamedb.data.model.GameDataModel
 import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
+import it.fabiocati.thegamedb.data.model.PlatformDataModel
 import it.fabiocati.thegamedb.data.network.TheGameDbService
 import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.domain.model.GameDetails
+import it.fabiocati.thegamedb.domain.model.Platform
 import it.fabiocati.thegamedb.domain.repository.GamesRepository
 import kotlinx.datetime.LocalDate
 
@@ -54,7 +56,16 @@ private fun GameDetailsDataModel.toModel(): GameDetails {
         artworkUrls = artworks,
         dateOfRelease = dateOfRelease,
         developmentCompany = companies.firstOrNull()?.name,
+        platforms = this.platforms.filter { it.abbreviation != null }.map { it.toModel() }
     )
 }
+
+private fun PlatformDataModel.toModel(): Platform =
+    Platform(
+        id = id,
+        abbreviation = abbreviation ?: "",
+        name = name,
+        url = url
+    )
 
 private fun String.getImageUrl(): String = this.replace("//", "https://").replace("t_thumb", "t_1080p")

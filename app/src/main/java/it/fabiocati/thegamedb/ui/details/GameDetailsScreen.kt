@@ -148,14 +148,14 @@ fun GameDetailsScreen(
                 }
             }
             item {
-                val ageRatings = listOf("HD", "Dolby Vision", "5.1", "CC", "AD")
+                val platformList = gameDetails?.platforms ?: emptyList()
                 FlowRow(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.offset(y = (-14).dp)
                 ) {
-                    ageRatings.forEach {
+                    platformList.forEach {
                         AgeRatingBox(
-                            text = it,
+                            text = it.abbreviation,
                             modifier = Modifier.padding(4.dp)
                         )
                     }
