@@ -6,8 +6,9 @@ import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCaseImpl
 import it.fabiocati.thegamedb.domain.usecase.GetPopularGamesUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetPopularGamesUseCaseImpl
+import it.fabiocati.thegamedb.domain.usecase.GetSimilarGameUseCase
+import it.fabiocati.thegamedb.domain.usecase.GetSimilarGameUseCaseImpl
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val useCaseModule = module {
     single<GetPopularGamesUseCase> {
@@ -18,6 +19,11 @@ val useCaseModule = module {
     }
     single<GetGameDetailsUseCase> {
         GetGameDetailsUseCaseImpl(
+            gamesRepository = get<GamesRepository>()
+        )
+    }
+    single<GetSimilarGameUseCase> {
+        GetSimilarGameUseCaseImpl(
             gamesRepository = get<GamesRepository>()
         )
     }

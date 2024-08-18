@@ -44,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.domain.model.GameDetails
 import it.fabiocati.thegamedb.domain.model.Platform
 import it.fabiocati.thegamedb.ui.components.ActionButton
@@ -61,12 +62,16 @@ import kotlinx.datetime.LocalDate
 @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun GameDetailsScreen(
-    gameDetails: GameDetails?,
+    uiState: GameDetailsUiState,
     onPlatformPressed: (Platform) -> Unit,
     onWebsitePressed: (String) -> Unit,
     onTrailerPressed: (String) -> Unit,
+    onSimilarGamePressed: (Game) -> Unit,
     onBackPressed: () -> Unit,
 ) {
+
+    val gameDetails = uiState.gameDetails
+    val similarGames = uiState.similarGames
 
     val colorStops = arrayOf(
         0.0f to Color.Transparent,
@@ -235,6 +240,8 @@ fun GameDetailsScreen(
                 ) { index ->
                     when (index) {
                         0 -> SimilarGamesGrid(
+                            similarGames = similarGames,
+                            onGamePressed = onSimilarGamePressed,
                             modifier = Modifier.padding(horizontal = 12.dp)
                         )
 
@@ -273,18 +280,15 @@ fun GameDetailsScreen(
 @Composable
 private fun GameDetailsScreenPreview() {
     TheGameDbTheme {
-        val game = GameDetails(
-            id = "001",
-            name = "Red Dead Redemption 2",
-            coverUrl = null,
-            developmentCompany = "Rockstar games",
-            dateOfRelease = LocalDate.fromEpochDays(0)
+        val uiState = GameDetailsUiState(
+            gameDetails = GameDetails(id = "Cassondra", name = "Raelene", coverUrl = null, screenshotUrls = listOf(), artworkUrls = listOf(), developmentCompany = null, genre = null, dateOfRelease = null, platforms = listOf(), url = null, youtubeUrl = null, storyline = null, summary = null)
         )
         GameDetailsScreen(
-            gameDetails = game,
+            uiState = uiState,
             onPlatformPressed = {},
             onWebsitePressed = {},
             onTrailerPressed = {},
+            onSimilarGamePressed = {},
             onBackPressed = {}
         )
     }

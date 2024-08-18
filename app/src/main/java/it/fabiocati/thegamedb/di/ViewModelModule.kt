@@ -2,6 +2,7 @@ package it.fabiocati.thegamedb.di
 
 import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetPopularGamesUseCase
+import it.fabiocati.thegamedb.domain.usecase.GetSimilarGameUseCase
 import it.fabiocati.thegamedb.ui.details.GameDetailsViewModel
 import it.fabiocati.thegamedb.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -16,7 +17,8 @@ val viewModelModule = module {
     }
     viewModel {
         GameDetailsViewModel(
-            getGameDetailsUseCase = get<GetGameDetailsUseCase>()
+            getGameDetailsUseCase = get<GetGameDetailsUseCase>(),
+            getSimilarGameUseCase = get<GetSimilarGameUseCase>()
         )
     }
 }

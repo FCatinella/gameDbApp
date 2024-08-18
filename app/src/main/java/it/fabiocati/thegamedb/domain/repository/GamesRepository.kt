@@ -7,4 +7,5 @@ interface GamesRepository {
 
     suspend fun getGames(limit: Int, offset: Int = 0, gameIds: List<Int> = emptyList()): List<Game>
     suspend fun getGameDetails(gameId: Int): GameDetails
+    suspend fun getSimilarGames(gameId: Int): List<Game>
 }

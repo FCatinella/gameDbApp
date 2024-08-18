@@ -24,6 +24,11 @@ class GamesRepositoryImpl(
         val gameDataModel = gameDbService.getGameDetail(gameId = gameId)
         return gameDataModel.toModel()
     }
+
+    override suspend fun getSimilarGames(gameId: Int): List<Game> {
+        val gameDataModels = gameDbService.getSimilarGames(gameId = gameId)
+        return gameDataModels.toGameList()
+    }
 }
 
 private fun List<GameDataModel>.toGameList(): List<Game> =

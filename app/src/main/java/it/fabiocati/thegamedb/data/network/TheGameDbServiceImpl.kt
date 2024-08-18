@@ -7,12 +7,10 @@ import io.ktor.client.request.setBody
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
-import it.fabiocati.thegamedb.data.model.CompanyDataModel
 import it.fabiocati.thegamedb.data.model.GameDataModel
 import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
-import it.fabiocati.thegamedb.data.model.ImageDataModel
-import it.fabiocati.thegamedb.data.model.InvolvedCompanyDataModel
 import it.fabiocati.thegamedb.data.model.PopularityPrimitiveDataModel
+import it.fabiocati.thegamedb.data.model.SimilarGamesDataModel
 
 internal class TheGameDbServiceImpl(
     private val httpClient: HttpClient
@@ -42,6 +40,29 @@ internal class TheGameDbServiceImpl(
             setBody("fields id ,cover.*, name, screenshots.*,artworks.* ,involved_companies.company.*,involved_companies.developer, involved_companies.game,first_release_date; limit $limit; offset $offset; sort rating desc;$whereString")
         }
         return result.body()
+    }
+
+    override suspend fun getSimilarGames(gameId: Int): List<GameDataModel> {
+        val result = httpClient.post {
+            method = HttpMethod.Post
+            this.url {
+                protocol = URLProtocol.HTTPS
+                host = "api.igdb.com"
+                path("v4/games")
+            }
+            setBody(
+                """
+                fields 
+                    id,
+                    similar_games.cover.*, 
+                    similar_games.name;
+                where 
+                    id = $gameId; 
+                limit 1;""".trimIndent()
+            )
+        }
+        val mainGame = result.body<List<SimilarGamesDataModel>>().first()
+        return mainGame.similarGames
     }
 
 

@@ -1,14 +1,15 @@
 package it.fabiocati.thegamedb.ui.details
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.ui.components.GameCover
 import it.fabiocati.thegamedb.ui.components.Grid
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
@@ -16,11 +17,12 @@ import it.fabiocati.thegamedb.utils.redDeadRedemption2
 
 @Composable
 fun SimilarGamesGrid(
+    similarGames: List<Game>,
+    onGamePressed: (Game) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val games = remember { (1..8).map { redDeadRedemption2 } }
     Grid(
-        items = games,
+        items = similarGames,
         columns = 2,
         modifier = modifier
     ) { item, index ->
@@ -34,9 +36,10 @@ fun SimilarGamesGrid(
                 .padding(
                     top = 8.dp,
                     bottom = 8.dp,
-                    start = if(isOnLeft) 0.dp else 8.dp,
-                    end = if(isOnLeft) 8.dp else 0.dp
+                    start = if (isOnLeft) 0.dp else 8.dp,
+                    end = if (isOnLeft) 8.dp else 0.dp
                 )
+                .clickable { onGamePressed(item) }
         )
     }
 }
@@ -44,7 +47,13 @@ fun SimilarGamesGrid(
 @Preview(device = Devices.PIXEL_5)
 @Composable
 private fun RecommendedGridPreview() {
+    val similarGames = listOf(
+        redDeadRedemption2, redDeadRedemption2, redDeadRedemption2
+    )
     TheGameDbTheme {
-        SimilarGamesGrid()
+        SimilarGamesGrid(
+            similarGames = similarGames,
+            onGamePressed = {}
+        )
     }
 }

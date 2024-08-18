@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.GameDetailsRouteDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import it.fabiocati.thegamedb.utils.extensions.openExternalUrl
 import org.koin.androidx.compose.koinViewModel
@@ -27,7 +28,7 @@ fun GameDetailsRoute(
     }
 
     GameDetailsScreen(
-        gameDetails = uiState.gameDetails,
+        uiState = uiState,
         onBackPressed = {
             navigator.navigateUp()
         },
@@ -39,6 +40,9 @@ fun GameDetailsRoute(
         },
         onPlatformPressed = {
             context.openExternalUrl(it.url)
+        },
+        onSimilarGamePressed = {
+            navigator.navigate(GameDetailsRouteDestination(gameId = it.id))
         }
     )
 }
