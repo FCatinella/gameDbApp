@@ -65,7 +65,10 @@ fun HomeScreen(
                 }
             }
             item {
-                HomeBannerHorizontalPager(games = uiState.wantedToPlayGames)
+                HomeBannerHorizontalPager(
+                    games = uiState.wantedToPlayGames,
+                    onGamePressed = onGamePressed
+                )
             }
             item {
                 PlatformSection(

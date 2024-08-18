@@ -2,6 +2,7 @@ package it.fabiocati.thegamedb.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,6 +39,7 @@ import kotlinx.datetime.LocalDate
 @Composable
 fun HomeBannerHorizontalPager(
     games: List<Game>,
+    onGamePressed: (Game) -> Unit,
     state: PagerState = rememberPagerState(pageCount = { games.size }),
 ) {
     HorizontalPager(
@@ -48,6 +50,9 @@ fun HomeBannerHorizontalPager(
         val game = games[index]
         HomeBannerElement(
             game = game,
+            modifier = Modifier.clickable {
+                onGamePressed(game)
+            }
         )
     }
 
@@ -144,7 +149,8 @@ private fun HomeBannerHorizontalPagerPreview() {
     )
 
     HomeBannerHorizontalPager(
-        games = games
+        games = games,
+        onGamePressed = {}
     )
 }
 
