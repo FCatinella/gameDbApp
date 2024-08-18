@@ -18,11 +18,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import it.fabiocati.thegamedb.domain.model.Event
 import it.fabiocati.thegamedb.ui.components.GameDbImage
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 
 @Composable
 fun RelatedEventComponent(
+    event: Event,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -32,27 +34,31 @@ fun RelatedEventComponent(
         modifier = modifier,
     ) {
         GameDbImage(
-            model = "https://images.igdb.com/igdb/image/upload/t_original/eldr.webp",
+            model = event.logo,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth().aspectRatio(16/9f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16 / 9f)
         )
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .height(4.dp)
-            .background(MaterialTheme.colorScheme.primaryContainer))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp)
+                .background(MaterialTheme.colorScheme.primaryContainer)
+        )
         Column(modifier = Modifier.padding(12.dp)) {
             Text(
-                text = "Ubisoft Forward 2023",
+                text = event.name,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Text(
-                text = "12 June 2023 18.00",
+                text = event.description ?: "N/A",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Text(
-                text = "6/12/2023 9:00:00 AMP PST",
+                text = event.startTime?.let { "${it.dayOfMonth} ${it.month.name} ${it.year}" } ?: "N/A",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
@@ -64,7 +70,12 @@ fun RelatedEventComponent(
 @Preview(device = Devices.PIXEL_5)
 @Composable
 private fun RelatedEventComponentPreview() {
+    val event = Event(
+        id = 6486, name = "Chloe", description = null, logo = null, startTime = null, liveStreamUrl = null
+    )
     TheGameDbTheme {
-        RelatedEventComponent()
+        RelatedEventComponent(
+            event = event
+        )
     }
 }

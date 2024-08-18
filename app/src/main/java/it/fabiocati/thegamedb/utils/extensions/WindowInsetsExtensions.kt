@@ -10,3 +10,9 @@ fun WindowInsets.getTopDp(): Dp =
     with(LocalDensity.current) {
         this@getTopDp.getTop(this).toDp()
     }
+
+@Composable
+fun WindowInsets.getBottomDp(): Dp =
+    with(LocalDensity.current) {
+        this@getBottomDp.getBottom(this).toDp()
+    }

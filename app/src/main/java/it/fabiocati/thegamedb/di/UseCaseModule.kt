@@ -1,7 +1,10 @@
 package it.fabiocati.thegamedb.di
 
+import it.fabiocati.thegamedb.domain.repository.EventRepository
 import it.fabiocati.thegamedb.domain.repository.GamesRepository
 import it.fabiocati.thegamedb.domain.repository.PopularityRepository
+import it.fabiocati.thegamedb.domain.usecase.GetEventsUseCase
+import it.fabiocati.thegamedb.domain.usecase.GetEventsUseCaseImpl
 import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCaseImpl
 import it.fabiocati.thegamedb.domain.usecase.GetPopularGamesUseCase
@@ -25,6 +28,11 @@ val useCaseModule = module {
     single<GetSimilarGameUseCase> {
         GetSimilarGameUseCaseImpl(
             gamesRepository = get<GamesRepository>()
+        )
+    }
+    single<GetEventsUseCase> {
+        GetEventsUseCaseImpl(
+            eventRepository = get<EventRepository>()
         )
     }
 }

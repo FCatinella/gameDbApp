@@ -9,6 +9,7 @@ import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.domain.model.GameDetails
 import it.fabiocati.thegamedb.domain.model.Platform
 import it.fabiocati.thegamedb.domain.repository.GamesRepository
+import it.fabiocati.thegamedb.utils.extensions.getImageUrl
 import kotlinx.datetime.LocalDate
 
 class GamesRepositoryImpl(
@@ -85,5 +86,3 @@ private fun PlatformDataModel.toModel(): Platform =
 private fun GameVideoDataModel.getYoutubeUrl(): String {
     return "https://youtube.com/watch?v=${this.videoId}"
 }
-
-private fun String.getImageUrl(): String = this.replace("//", "https://").replace("t_thumb", "t_1080p")

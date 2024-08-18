@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
@@ -55,6 +57,7 @@ import it.fabiocati.thegamedb.ui.components.GameDbTabRow
 import it.fabiocati.thegamedb.ui.components.LoadingText
 import it.fabiocati.thegamedb.ui.components.SecondaryButton
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
+import it.fabiocati.thegamedb.utils.extensions.getBottomDp
 import it.fabiocati.thegamedb.utils.extensions.getTopDp
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
@@ -89,6 +92,7 @@ fun GameDetailsScreen(
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(bottom = WindowInsets.systemBars.getBottomDp() + 8.dp)
         ) {
             item {
                 GameDbImage(
@@ -247,12 +251,12 @@ fun GameDetailsScreen(
 
                         1 -> {
                             Column(modifier = Modifier.padding(horizontal = 12.dp)) {
-                                RelatedEventComponent(
-                                    modifier = Modifier.padding(vertical = 16.dp)
-                                )
-                                RelatedEventComponent(
-                                    modifier = Modifier.padding(vertical = 8.dp)
-                                )
+                                uiState.relatedEvents.forEach { event ->
+                                    RelatedEventComponent(
+                                        event = event,
+                                        modifier = Modifier.padding(vertical = 16.dp)
+                                    )
+                                }
                             }
                         }
 

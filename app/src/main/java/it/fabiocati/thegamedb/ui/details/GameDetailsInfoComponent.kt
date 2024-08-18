@@ -1,5 +1,6 @@
 package it.fabiocati.thegamedb.ui.details
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -85,5 +86,6 @@ private fun GameDetailsInfoComponentPreview() {
     }
 }
 
+@SuppressLint("DefaultLocale")
 private fun LocalDate.toFormattedString(): String =
-    "${this.dayOfMonth}-${String.format("%02d",this.monthNumber)}-${this.year}"
+    "${String.format("%02d", this.dayOfMonth)}-${String.format("%02d", this.monthNumber)}-${this.year}"

@@ -1,5 +1,6 @@
 package it.fabiocati.thegamedb.di
 
+import it.fabiocati.thegamedb.domain.usecase.GetEventsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetPopularGamesUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetSimilarGameUseCase
@@ -18,7 +19,8 @@ val viewModelModule = module {
     viewModel {
         GameDetailsViewModel(
             getGameDetailsUseCase = get<GetGameDetailsUseCase>(),
-            getSimilarGameUseCase = get<GetSimilarGameUseCase>()
+            getSimilarGameUseCase = get<GetSimilarGameUseCase>(),
+            getEventsUseCase = get<GetEventsUseCase>()
         )
     }
 }

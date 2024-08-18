@@ -2,6 +2,7 @@ package it.fabiocati.thegamedb.ui.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import it.fabiocati.thegamedb.domain.usecase.GetEventsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetGameDetailsUseCase
 import it.fabiocati.thegamedb.domain.usecase.GetSimilarGameUseCase
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 class GameDetailsViewModel(
     private val getGameDetailsUseCase: GetGameDetailsUseCase,
     private val getSimilarGameUseCase: GetSimilarGameUseCase,
+    private val getEventsUseCase: GetEventsUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailsUiState())
@@ -21,6 +23,7 @@ class GameDetailsViewModel(
     fun init(gameId: String) {
         getGameDetails(gameId)
         getSimilarGames(gameId)
+        getRelatedEvents(gameId)
     }
 
     private fun getGameDetails(gameId: String) {
@@ -37,6 +40,15 @@ class GameDetailsViewModel(
             val similarGames = getSimilarGameUseCase.invoke(gameId.toInt())
             _uiState.update {
                 it.copy(similarGames = similarGames)
+            }
+        }
+    }
+
+    private fun getRelatedEvents(gameId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val relatedEvents = getEventsUseCase.invoke(gameId)
+            _uiState.update {
+                it.copy(relatedEvents = relatedEvents)
             }
         }
     }

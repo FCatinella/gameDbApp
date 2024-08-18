@@ -7,6 +7,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
+import it.fabiocati.thegamedb.data.model.EventDataModel
 import it.fabiocati.thegamedb.data.model.GameDataModel
 import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
 import it.fabiocati.thegamedb.data.model.PopularityPrimitiveDataModel
@@ -109,5 +110,26 @@ internal class TheGameDbServiceImpl(
             setBody("fields *; sort value $sort; limit $limit; where popularity_type = $popularityType;")
         }
         return result.body()
+    }
+
+    override suspend fun getEvents(gameId: Int): List<EventDataModel> {
+        val result = httpClient.post {
+            method = HttpMethod.Post
+            this.url {
+                protocol = URLProtocol.HTTPS
+                host = "api.igdb.com"
+                path("v4/events")
+            }
+            setBody(
+                """
+                fields 
+                    *,
+                    event_logo.*; 
+                where 
+                    games = ($gameId); 
+                limit 10;""".trimIndent()
+            )
+        }
+        return result.body<List<EventDataModel>>()
     }
 }
