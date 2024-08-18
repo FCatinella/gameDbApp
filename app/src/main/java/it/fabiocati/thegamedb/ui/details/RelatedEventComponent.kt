@@ -39,22 +39,22 @@ fun RelatedEventComponent(
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(4.dp)
-            .background(MaterialTheme.colorScheme.secondaryContainer))
+            .background(MaterialTheme.colorScheme.primaryContainer))
         Column(modifier = Modifier.padding(12.dp)) {
             Text(
                 text = "Ubisoft Forward 2023",
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Text(
                 text = "12 June 2023 18.00",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
             Text(
                 text = "6/12/2023 9:00:00 AMP PST",
                 style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
 
