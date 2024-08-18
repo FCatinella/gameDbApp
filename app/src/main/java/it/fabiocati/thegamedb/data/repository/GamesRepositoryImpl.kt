@@ -63,7 +63,9 @@ private fun GameDetailsDataModel.toModel(): GameDetails {
             //see https://api-docs.igdb.com/?shell#website
             it.category == 1
         }?.url,
-        youtubeUrl = this.gameVideos.firstOrNull()?.getYoutubeUrl()
+        youtubeUrl = this.gameVideos.firstOrNull()?.getYoutubeUrl(),
+        summary = this.summary,
+        storyline = this.storyline,
     )
 }
 

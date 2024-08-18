@@ -21,4 +21,8 @@ data class GameDetailsDataModel(
     val websites: List<WebsiteDataModel> = emptyList(),
     @SerialName("videos")
     val gameVideos: List<GameVideoDataModel> = emptyList(),
+    @SerialName("storyline")
+    val storyline : String? = null,
+    @SerialName("summary")
+    val summary : String? = null
 )

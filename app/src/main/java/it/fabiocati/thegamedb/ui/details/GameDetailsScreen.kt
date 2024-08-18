@@ -155,7 +155,9 @@ fun GameDetailsScreen(
                 val platformList = gameDetails?.platforms ?: emptyList()
                 FlowRow(
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.offset(y = (-14).dp)
+                    modifier = Modifier
+                        .offset(y = (-14).dp)
+                        .padding(horizontal = 12.dp)
                 ) {
                     platformList.forEach {
                         PlatformBox(
@@ -192,15 +194,16 @@ fun GameDetailsScreen(
                         onClick = { gameDetails?.youtubeUrl?.let { url -> onTrailerPressed(url) } }
                     )
                 }
-
             }
             item {
-                Text(
-                    text =
+                LoadingText(
+                    text = gameDetails?.let { gameDetails -> gameDetails.summary ?: "N/A" },
+                    placeholderText =
                     """
                     Red Dead Redemption 2 is the epic tale of outlaw Arthur Morgan and the infamous Van der Linde gang, on the run across America at the dawn of the modern age. """.trimIndent(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
@@ -248,6 +251,7 @@ fun GameDetailsScreen(
 
                         2 -> {
                             GameDetailsInfoComponent(
+                                gameDetails = gameDetails,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 16.dp)
                             )
                         }

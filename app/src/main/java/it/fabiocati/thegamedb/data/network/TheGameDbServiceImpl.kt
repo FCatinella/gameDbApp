@@ -65,6 +65,8 @@ internal class TheGameDbServiceImpl(
                     platforms.*,
                     websites.*,
                     videos.*,
+                    storyline,
+                    summary,
                     first_release_date; 
                 where 
                     id = $gameId; 
