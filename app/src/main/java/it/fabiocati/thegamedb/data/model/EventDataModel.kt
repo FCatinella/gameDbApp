@@ -1,4 +1,5 @@
 package it.fabiocati.thegamedb.data.model
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -24,8 +25,6 @@ data class EventDataModel(
     val slug: String,
     @SerialName("start_time")
     val startTime: Int? = null,
-    @SerialName("time_zone")
-    val timeZone: String,
     @SerialName("updated_at")
     val updatedAt: Int,
 )
