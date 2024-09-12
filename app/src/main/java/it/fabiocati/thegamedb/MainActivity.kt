@@ -4,13 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import it.fabiocati.thegamedb.ui.main.TheGameDbApp
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
-import org.koin.mp.KoinPlatformTools
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +18,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-object KoinFactory {
-    inline fun <reified T> get(): T = KoinPlatformTools.defaultContext().get().get(clazz = T::class)
 }
