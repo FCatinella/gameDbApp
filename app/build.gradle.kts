@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3)
 
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
+
     implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.koin.bom))

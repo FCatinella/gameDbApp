@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -63,16 +64,20 @@ private fun HomeBannerElement(
     game: Game,
     modifier: Modifier = Modifier,
 ) {
+
+    val uiConfig = remember { getUiConfig() }
+
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(4.dp)
     ) {
         Box(
             modifier = Modifier
-                .aspectRatio(0.8f)
+                .aspectRatio(uiConfig.cardAspectRatio)
         ) {
             GameDbImage(
-                model = game.artworkUrls.firstOrNull() ?: game.screenshotUrls.firstOrNull() ?: game.coverUrl ?: "",
+                model = game.artworkUrls.firstOrNull() ?: game.screenshotUrls.firstOrNull()
+                ?: game.coverUrl ?: "",
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -82,16 +87,11 @@ private fun HomeBannerElement(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                Color.Black.copy(alpha = 0.8f),
-                                Color.Transparent
-                            ),
-                        )
+                        brush = uiConfig.backgroundBrush
                     )
             )
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = uiConfig.textColumnHorizontalAlignment,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth(fraction = 0.8f)
@@ -104,7 +104,7 @@ private fun HomeBannerElement(
                         fontSize = 32.sp,
                         color = Color.White
                     ),
-                    textAlign = TextAlign.Center,
+                    textAlign = uiConfig.gameNameTextAlign,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -114,7 +114,7 @@ private fun HomeBannerElement(
                         fontSize = 16.sp,
                         color = Color.White
                     ),
-                    textAlign = TextAlign.Center,
+                    textAlign = uiConfig.gameDevelopmentCompanyTextAlign,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -130,6 +130,28 @@ private fun HomeBannerElement(
         }
     }
 }
+
+private data class HomeBannerUiConfig(
+    val cardAspectRatio: Float,
+    val gameNameTextAlign: TextAlign,
+    val gameDevelopmentCompanyTextAlign: TextAlign,
+    val backgroundBrush: Brush,
+    val textColumnHorizontalAlignment: Alignment.Horizontal
+)
+
+
+private fun getUiConfig() = HomeBannerUiConfig(
+    cardAspectRatio = 0.8f,
+    gameNameTextAlign = TextAlign.Center,
+    gameDevelopmentCompanyTextAlign = TextAlign.Center,
+    backgroundBrush = Brush.linearGradient(
+        colors = listOf(
+            Color.Black.copy(alpha = 0.8f),
+            Color.Transparent
+        ),
+    ),
+    textColumnHorizontalAlignment = Alignment.CenterHorizontally
+)
 
 
 @OptIn(ExperimentalFoundationApi::class)
