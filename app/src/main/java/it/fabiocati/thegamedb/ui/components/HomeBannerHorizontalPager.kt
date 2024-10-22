@@ -1,6 +1,5 @@
 package it.fabiocati.thegamedb.ui.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -36,7 +35,6 @@ import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 import kotlinx.datetime.LocalDate
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeBannerHorizontalPager(
     games: List<Game>,
@@ -93,7 +91,7 @@ private fun HomeBannerElement(
             Column(
                 horizontalAlignment = uiConfig.textColumnHorizontalAlignment,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
+                    .align(uiConfig.columnAlignment)
                     .fillMaxWidth(fraction = 0.8f)
                     .padding(16.dp)
             ) {
@@ -136,7 +134,8 @@ private data class HomeBannerUiConfig(
     val gameNameTextAlign: TextAlign,
     val gameDevelopmentCompanyTextAlign: TextAlign,
     val backgroundBrush: Brush,
-    val textColumnHorizontalAlignment: Alignment.Horizontal
+    val textColumnHorizontalAlignment: Alignment.Horizontal,
+    val columnAlignment: Alignment
 )
 
 
@@ -150,11 +149,11 @@ private fun getUiConfig() = HomeBannerUiConfig(
             Color.Transparent
         ),
     ),
-    textColumnHorizontalAlignment = Alignment.CenterHorizontally
+    textColumnHorizontalAlignment = Alignment.CenterHorizontally,
+    columnAlignment = Alignment.BottomCenter
 )
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun HomeBannerHorizontalPagerPreview() {
