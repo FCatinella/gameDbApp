@@ -1,6 +1,7 @@
 package it.fabiocati.thegamedb.domain.model
 
 import kotlinx.datetime.LocalDate
+import kotlinx.serialization.Serializable
 
 data class Game(
     val id: String,

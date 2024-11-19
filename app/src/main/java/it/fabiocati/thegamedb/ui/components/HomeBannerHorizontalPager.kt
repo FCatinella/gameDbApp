@@ -1,7 +1,7 @@
 package it.fabiocati.thegamedb.ui.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,7 +17,9 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -30,14 +32,15 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import it.fabiocati.thegamedb.LocalWindowWidthSizeClass
 import it.fabiocati.thegamedb.domain.model.Game
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
 import kotlinx.datetime.LocalDate
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeBannerHorizontalPager(
     games: List<Game>,
+    onGamePressed: (Game) -> Unit,
     state: PagerState = rememberPagerState(pageCount = { games.size }),
 ) {
     HorizontalPager(
@@ -48,6 +51,9 @@ fun HomeBannerHorizontalPager(
         val game = games[index]
         HomeBannerElement(
             game = game,
+            modifier = Modifier.clickable {
+                onGamePressed(game)
+            }
         )
     }
 
@@ -56,18 +62,23 @@ fun HomeBannerHorizontalPager(
 @Composable
 private fun HomeBannerElement(
     game: Game,
+    currentWindowWidthSizeClass: WindowWidthSizeClass = LocalWindowWidthSizeClass.current,
     modifier: Modifier = Modifier,
 ) {
+
+    val uiConfig = remember(currentWindowWidthSizeClass) { getUiConfig(currentWindowWidthSizeClass) }
+
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(4.dp)
     ) {
         Box(
             modifier = Modifier
-                .aspectRatio(0.8f)
+                .aspectRatio(uiConfig.cardAspectRatio)
         ) {
             GameDbImage(
-                model = game.artworkUrls.firstOrNull() ?: game.screenshotUrls.firstOrNull() ?: game.coverUrl ?: "",
+                model = game.artworkUrls.firstOrNull() ?: game.screenshotUrls.firstOrNull()
+                ?: game.coverUrl ?: "",
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -77,18 +88,13 @@ private fun HomeBannerElement(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                Color.Black.copy(alpha = 0.8f),
-                                Color.Transparent
-                            ),
-                        )
+                        brush = uiConfig.backgroundBrush
                     )
             )
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = uiConfig.textColumnHorizontalAlignment,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
+                    .align(uiConfig.columnAlignment)
                     .fillMaxWidth(fraction = 0.8f)
                     .padding(16.dp)
             ) {
@@ -99,7 +105,7 @@ private fun HomeBannerElement(
                         fontSize = 32.sp,
                         color = Color.White
                     ),
-                    textAlign = TextAlign.Center,
+                    textAlign = uiConfig.gameNameTextAlign,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -109,7 +115,7 @@ private fun HomeBannerElement(
                         fontSize = 16.sp,
                         color = Color.White
                     ),
-                    textAlign = TextAlign.Center,
+                    textAlign = uiConfig.gameDevelopmentCompanyTextAlign,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -126,8 +132,54 @@ private fun HomeBannerElement(
     }
 }
 
+private data class HomeBannerUiConfig(
+    val cardAspectRatio: Float,
+    val gameNameTextAlign: TextAlign,
+    val gameDevelopmentCompanyTextAlign: TextAlign,
+    val backgroundBrush: Brush,
+    val textColumnHorizontalAlignment: Alignment.Horizontal,
+    val columnAlignment: Alignment
+)
 
-@OptIn(ExperimentalFoundationApi::class)
+
+private fun getUiConfig(currentWindowWidthSizeClass: WindowWidthSizeClass) = when (
+    currentWindowWidthSizeClass
+) {
+    WindowWidthSizeClass.Medium -> {
+        HomeBannerUiConfig(
+            cardAspectRatio = 2.5f,
+            gameNameTextAlign = TextAlign.Start,
+            gameDevelopmentCompanyTextAlign = TextAlign.Start,
+            backgroundBrush = Brush.horizontalGradient(
+                colors = listOf(
+                    Color.Black.copy(alpha = 0.8f),
+                    Color.Transparent
+                ),
+            ),
+            textColumnHorizontalAlignment = Alignment.Start,
+            columnAlignment = Alignment.BottomStart
+        )
+    }
+
+    else -> {
+        HomeBannerUiConfig(
+            cardAspectRatio = 0.8f,
+            gameNameTextAlign = TextAlign.Center,
+            gameDevelopmentCompanyTextAlign = TextAlign.Center,
+            backgroundBrush = Brush.linearGradient(
+                colors = listOf(
+                    Color.Black.copy(alpha = 0.8f),
+                    Color.Transparent
+                ),
+            ),
+            textColumnHorizontalAlignment = Alignment.CenterHorizontally,
+            columnAlignment = Alignment.BottomCenter
+        )
+    }
+
+}
+
+
 @Preview
 @Composable
 private fun HomeBannerHorizontalPagerPreview() {
@@ -144,7 +196,8 @@ private fun HomeBannerHorizontalPagerPreview() {
     )
 
     HomeBannerHorizontalPager(
-        games = games
+        games = games,
+        onGamePressed = {}
     )
 }
 
@@ -160,6 +213,5 @@ private fun HomeBannerElementPreview() {
     )
     TheGameDbTheme {
         HomeBannerElement(game)
-
     }
 }

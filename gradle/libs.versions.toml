@@ -13,7 +13,7 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.8.2"
 lifecycle-runtime-compose = "2.6.2"
-activityCompose = "1.9.0"
+activityCompose = "1.9.1"
 composeBom = "2024.06.00"
 gradle-secrets = "2.0.1"
 navigation-compose = "2.7.7"
@@ -21,6 +21,7 @@ ksp = "1.9.22-1.0.17"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

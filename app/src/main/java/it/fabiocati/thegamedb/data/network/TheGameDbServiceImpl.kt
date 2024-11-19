@@ -7,12 +7,11 @@ import io.ktor.client.request.setBody
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
-import it.fabiocati.thegamedb.data.model.CompanyDataModel
+import it.fabiocati.thegamedb.data.model.EventDataModel
 import it.fabiocati.thegamedb.data.model.GameDataModel
 import it.fabiocati.thegamedb.data.model.GameDetailsDataModel
-import it.fabiocati.thegamedb.data.model.ImageDataModel
-import it.fabiocati.thegamedb.data.model.InvolvedCompanyDataModel
 import it.fabiocati.thegamedb.data.model.PopularityPrimitiveDataModel
+import it.fabiocati.thegamedb.data.model.SimilarGamesDataModel
 
 internal class TheGameDbServiceImpl(
     private val httpClient: HttpClient
@@ -44,79 +43,59 @@ internal class TheGameDbServiceImpl(
         return result.body()
     }
 
+    override suspend fun getSimilarGames(gameId: Int): List<GameDataModel> {
+        val result = httpClient.post {
+            method = HttpMethod.Post
+            this.url {
+                protocol = URLProtocol.HTTPS
+                host = "api.igdb.com"
+                path("v4/games")
+            }
+            setBody(
+                """
+                fields 
+                    id,
+                    similar_games.cover.*, 
+                    similar_games.name;
+                where 
+                    id = $gameId; 
+                limit 1;""".trimIndent()
+            )
+        }
+        val mainGame = result.body<List<SimilarGamesDataModel>>().first()
+        return mainGame.similarGames
+    }
+
 
     override suspend fun getGameDetail(gameId: Int): GameDetailsDataModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getCovers(vararg coverIds: Int): List<ImageDataModel> {
         val result = httpClient.post {
             method = HttpMethod.Post
             this.url {
                 protocol = URLProtocol.HTTPS
                 host = "api.igdb.com"
-                path("v4/covers")
+                path("v4/games")
             }
-            val idsString = coverIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
+            setBody(
+                """
+                fields 
+                    id,
+                    name,
+                    artworks.*,
+                    involved_companies.company.*,
+                    involved_companies.developer,
+                    involved_companies.game,
+                    platforms.*,
+                    websites.*,
+                    videos.*,
+                    storyline,
+                    summary,
+                    first_release_date; 
+                where 
+                    id = $gameId; 
+                limit 1;""".trimIndent()
+            )
         }
-        return result.body()
-    }
-
-    override suspend fun getScreenshots(vararg screenshotIds: Int): List<ImageDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/screenshots")
-            }
-            val idsString = screenshotIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getArtworks(vararg artworksIds: Int): List<ImageDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/artworks")
-            }
-            val idsString = artworksIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id,game,image_id,url; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getInvolvedCompanies(vararg involvedCompaniesIds: Int): List<InvolvedCompanyDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/involved_companies")
-            }
-            val idsString = involvedCompaniesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id, company, developer, game; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
-    }
-
-    override suspend fun getCompanies(vararg companiesIds: Int): List<CompanyDataModel> {
-        val result = httpClient.post {
-            method = HttpMethod.Post
-            this.url {
-                protocol = URLProtocol.HTTPS
-                host = "api.igdb.com"
-                path("v4/companies")
-            }
-            val idsString = companiesIds.fold("") { old, new -> if (old.isNotBlank()) "$old,$new" else "$new" }
-            setBody("fields id, name; where id = (${idsString}); limit 500;")
-        }
-        return result.body()
+        return result.body<List<GameDetailsDataModel>>().first()
     }
 
     override suspend fun getPopular(popularityType: Int, sort: String, limit: Int): List<PopularityPrimitiveDataModel> {
@@ -131,5 +110,26 @@ internal class TheGameDbServiceImpl(
             setBody("fields *; sort value $sort; limit $limit; where popularity_type = $popularityType;")
         }
         return result.body()
+    }
+
+    override suspend fun getEvents(gameId: Int): List<EventDataModel> {
+        val result = httpClient.post {
+            method = HttpMethod.Post
+            this.url {
+                protocol = URLProtocol.HTTPS
+                host = "api.igdb.com"
+                path("v4/events")
+            }
+            setBody(
+                """
+                fields 
+                    *,
+                    event_logo.*; 
+                where 
+                    games = ($gameId); 
+                limit 10;""".trimIndent()
+            )
+        }
+        return result.body<List<EventDataModel>>()
     }
 }

@@ -24,6 +24,9 @@ android {
     }
 
     buildTypes {
+        debug{
+            isDebuggable = false
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -63,12 +66,16 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3)
 
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
+
     implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+    implementation (libs.androidx.material.icons.extended)
+
 
     implementation(libs.ktor.client)
     implementation(libs.ktor.auth)

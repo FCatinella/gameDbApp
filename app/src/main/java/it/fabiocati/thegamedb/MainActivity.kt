@@ -4,27 +4,24 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.CompositionLocalProvider
 import it.fabiocati.thegamedb.ui.main.TheGameDbApp
 import it.fabiocati.thegamedb.ui.theme.TheGameDbTheme
-import org.koin.mp.KoinPlatformTools
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         setContent {
-            TheGameDbTheme {
-                TheGameDbApp()
+            val currentWindowWidthSizeClass = calculateWindowSizeClass(this).widthSizeClass
+            CompositionLocalProvider(LocalWindowWidthSizeClass provides currentWindowWidthSizeClass) {
+                TheGameDbTheme {
+                    TheGameDbApp()
+                }
             }
         }
     }
-}
-
-object KoinFactory {
-    inline fun <reified T> get(): T = KoinPlatformTools.defaultContext().get().get(clazz = T::class)
 }
