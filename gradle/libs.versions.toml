@@ -16,12 +16,14 @@ lifecycle-runtime-compose = "2.6.2"
 activityCompose = "1.9.1"
 composeBom = "2024.06.00"
 gradle-secrets = "2.0.1"
+material3WindowSizeClass = "1.3.0"
 navigation-compose = "2.7.7"
 ksp = "1.9.22-1.0.17"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,6 +31,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
+android-tools-build = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -62,4 +65,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 gradle-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "gradle-secrets" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-
+common-config = { id = "it.fabiocati.thegamedb.build_logic.commonConfig", version = "1"}
