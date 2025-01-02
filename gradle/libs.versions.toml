@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.0"
 coil = "2.6.0"
+glance-app-widget = "1.1.1"
 koin-bom = "3.5.6"
 kotlin = "1.9.22"
 compose-destination = "2.0.0-beta09"
@@ -24,6 +25,12 @@ ksp = "1.9.22-1.0.17"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
+androidx-glance-app-widget = { module = "androidx.glance:glance-appwidget", version.ref = "glance-app-widget" }
+androidx-glance-app-material3 = { module = "androidx.glance:glance-material3", version.ref = "glance-app-widget" }
+androidx-glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance-app-widget" }
+androidx-glance-glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance-app-widget" }
+
+
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -65,4 +72,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 gradle-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "gradle-secrets" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-common-config = { id = "it.fabiocati.thegamedb.build_logic.commonConfig", version = "1"}
+common-config = { id = "it.fabiocati.thegamedb.build_logic.commonConfig", version = "1" }
+
+[bundles]
+androidx-glance-app-widget = ["androidx-glance-app-widget", "androidx-glance-app-material3", "androidx-glance-appwidget-preview", "androidx-glance-glance-preview"]

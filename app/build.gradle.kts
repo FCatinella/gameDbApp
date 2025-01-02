@@ -67,6 +67,8 @@ dependencies {
 
     implementation(libs.kotlinx.datetime)
 
+    implementation(libs.bundles.androidx.glance.app.widget)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
