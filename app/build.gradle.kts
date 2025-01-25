@@ -4,16 +4,14 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.gradle.secrets)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.common.config)
 }
 
 android {
     namespace = "it.fabiocati.thegamedb"
-    compileSdk = 34
 
     defaultConfig {
         applicationId = "it.fabiocati.thegamedb"
-        minSdk = 28
-        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -24,32 +22,12 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             isDebuggable = false
         }
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
@@ -66,7 +44,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3)
 
-    implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
+    implementation(libs.androidx.material3.windowSizeClass)
 
     implementation(libs.kotlinx.serialization.json)
 
@@ -75,7 +53,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation (libs.androidx.material.icons.extended)
-
 
     implementation(libs.ktor.client)
     implementation(libs.ktor.auth)
