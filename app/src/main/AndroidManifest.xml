@@ -27,7 +27,7 @@
         </activity>
 
         <receiver
-            android:name=".widget.GameDBWidgetProvider"
+            android:name=".widget.randomGame.RandomGameWidgetProvider"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
