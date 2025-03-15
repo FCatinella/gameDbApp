@@ -27,7 +27,7 @@ class CommonBuildConfig : Plugin<Project> {
         target.android.apply {
             compileSdk = 34
             defaultConfig {
-                minSdk = 28
+                minSdk = 31
             }
             buildTypes {
                 release {

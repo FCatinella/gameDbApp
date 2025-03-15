@@ -3,26 +3,27 @@ package it.fabiocati.thegamedb.widget.randomGame.content
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.ImageProvider
 import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.components.TitleBar
+import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.height
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
+import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import it.fabiocati.thegamedb.R
-import it.fabiocati.thegamedb.domain.model.GameDetails
-import it.fabiocati.thegamedb.widget.randomGame.fakeGame
 
 @Composable
-internal fun RandomGameWidgetContentCompact(
-    game: GameDetails,
+internal fun RandomGameWidgetContentFailed(
 ) {
     Scaffold(
         titleBar = {
@@ -32,34 +33,34 @@ internal fun RandomGameWidgetContentCompact(
             )
         }
     ) {
-        Column {
+        Column(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = GlanceModifier.fillMaxSize()
+        ) {
             Text(
-                text = game.name,
+                text = "Unable to retrieve data",
                 style = TextStyle(
                     fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = GlanceTheme.colors.onBackground
+                    fontWeight = FontWeight.Normal,
+                    color = GlanceTheme.colors.onBackground,
+                    textAlign = TextAlign.Center
                 )
             )
-            Spacer(modifier = GlanceModifier.height(2.dp))
-            Text(
-                text = (game.summary?.take(83) + "..."),
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    color = GlanceTheme.colors.onBackground
-                )
+            Spacer(modifier = GlanceModifier.height(12.dp))
+            Button(
+                text = "Retry",
+                onClick = {}
             )
         }
     }
 }
 
 @OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 180, heightDp = 145)
+@Preview(widthDp = 250, heightDp = 250)
 @Composable
 private fun Preview() {
     GlanceTheme {
-        RandomGameWidgetContentCompact(
-            game = fakeGame
-        )
+        RandomGameWidgetContentFailed()
     }
 }
