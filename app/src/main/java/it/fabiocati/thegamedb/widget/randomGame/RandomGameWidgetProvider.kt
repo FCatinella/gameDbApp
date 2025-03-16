@@ -21,6 +21,8 @@ import it.fabiocati.thegamedb.widget.randomGame.content.RandomGameWidgetContentE
 import it.fabiocati.thegamedb.widget.randomGame.content.RandomGameWidgetContentFailed
 import it.fabiocati.thegamedb.widget.randomGame.content.RandomGameWidgetContentMedium
 import it.fabiocati.thegamedb.widget.randomGame.di.RandomGameKoin
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RandomGameWidgetProvider : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget
@@ -39,14 +41,13 @@ private class RandomGameWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val koin = RandomGameKoin(context).koin
         runCatching {
-            val getPopularGamesUseCase = koin.get<GetPopularGamesUseCase>()
-            val getGameDetailsUseCase = koin.get<GetGameDetailsUseCase>()
-
-            val popularGames = getPopularGamesUseCase(popularityType = PopularityType.entries.random())
-            val randomGameId = popularGames.random().id
-
-            val result = getGameDetailsUseCase(gameId = randomGameId)
-            koin.close()
+            val result = withContext(Dispatchers.IO) {
+                val getPopularGamesUseCase = koin.get<GetPopularGamesUseCase>()
+                val getGameDetailsUseCase = koin.get<GetGameDetailsUseCase>()
+                val popularGames = getPopularGamesUseCase(popularityType = PopularityType.entries.random())
+                val randomGameId = popularGames.random().id
+                getGameDetailsUseCase(gameId = randomGameId)
+            }
             result
         }.onSuccess { game ->
             val deepLinkIntent = buildOpenAppIntent(game.id.toInt())
@@ -66,6 +67,7 @@ private class RandomGameWidget : GlanceAppWidget() {
                 RandomGameWidgetContentFailed()
             }
         }
+        koin.close()
     }
 
     private fun buildOpenAppIntent(gameId: Int) =
