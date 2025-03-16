@@ -1,7 +1,6 @@
 package it.fabiocati.thegamedb.widget.randomGame
 
 import android.content.Context
-import androidx.compose.ui.unit.DpSize
 import androidx.glance.GlanceId
 import androidx.glance.LocalSize
 import androidx.glance.appwidget.GlanceAppWidget
@@ -32,7 +31,7 @@ private class RandomGameWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val koin = RandomGameKoin.koin
+        val koin = RandomGameKoin(context).koin
         runCatching {
             val getPopularGamesUseCase = koin.get<GetPopularGamesUseCase>()
             val getGameDetailsUseCase = koin.get<GetGameDetailsUseCase>()
@@ -40,7 +39,9 @@ private class RandomGameWidget : GlanceAppWidget() {
             val popularGames = getPopularGamesUseCase(popularityType = PopularityType.entries.random())
             val randomGameId = popularGames.random().id
 
-            getGameDetailsUseCase(gameId = randomGameId)
+            val result = getGameDetailsUseCase(gameId = randomGameId)
+            koin.close()
+            result
         }.onSuccess { game ->
             provideContent {
                 when (LocalSize.current) {
