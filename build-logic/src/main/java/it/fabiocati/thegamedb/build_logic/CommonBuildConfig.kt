@@ -25,7 +25,7 @@ private typealias CommonExtensionType = CommonExtension<
 class CommonBuildConfig : Plugin<Project> {
     override fun apply(target: Project) {
         target.android.apply {
-            compileSdk = 34
+            compileSdk = 35
             defaultConfig {
                 minSdk = 31
             }

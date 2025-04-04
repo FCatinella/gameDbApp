@@ -6,10 +6,13 @@ import androidx.core.net.toUri
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalSize
+import androidx.glance.action.ActionParameters
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.action.ActionCallback
+import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.provideContent
 import androidx.glance.layout.Box
@@ -25,11 +28,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RandomGameWidgetProvider : GlanceAppWidgetReceiver() {
+
+    val preview: GlanceAppWidget = RandomGameWidget(isPreview = true)
+
     override val glanceAppWidget: GlanceAppWidget
         get() = RandomGameWidget()
 }
 
-private class RandomGameWidget : GlanceAppWidget() {
+private class RandomGameWidget(
+    private val isPreview: Boolean = false,
+) : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
         sizes = setOf(
             RandomGameWidgetSize.COMPACT,
@@ -41,6 +49,7 @@ private class RandomGameWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val koin = RandomGameKoin(context).koin
         runCatching {
+            if (isPreview) return@runCatching fakeGame
             val result = withContext(Dispatchers.IO) {
                 val getPopularGamesUseCase = koin.get<GetPopularGamesUseCase>()
                 val getGameDetailsUseCase = koin.get<GetGameDetailsUseCase>()
@@ -62,9 +71,11 @@ private class RandomGameWidget : GlanceAppWidget() {
                     }
                 }
             }
-        }.onFailure {
+        }.onFailure { ex->
             provideContent {
-                RandomGameWidgetContentFailed()
+                RandomGameWidgetContentFailed(
+                    onRetryClick = actionRunCallback<RefreshAction>()
+                )
             }
         }
         koin.close()
@@ -74,4 +85,14 @@ private class RandomGameWidget : GlanceAppWidget() {
         Intent(Intent.ACTION_VIEW).apply {
             data = "app://gamedb.fabiocati.it/$gameId".toUri()
         }
+}
+
+class RefreshAction : ActionCallback {
+    override suspend fun onAction(
+        context: Context,
+        glanceId: GlanceId,
+        parameters: ActionParameters
+    ) {
+        RandomGameWidget().update(context, glanceId)
+    }
 }

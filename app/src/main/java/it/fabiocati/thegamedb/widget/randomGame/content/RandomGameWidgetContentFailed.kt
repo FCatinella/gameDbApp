@@ -7,6 +7,8 @@ import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.ImageProvider
+import androidx.glance.action.Action
+import androidx.glance.action.action
 import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.components.TitleBar
 import androidx.glance.layout.Alignment
@@ -24,6 +26,7 @@ import it.fabiocati.thegamedb.R
 
 @Composable
 internal fun RandomGameWidgetContentFailed(
+    onRetryClick: Action = action {  },
 ) {
     Scaffold(
         titleBar = {
@@ -50,7 +53,7 @@ internal fun RandomGameWidgetContentFailed(
             Spacer(modifier = GlanceModifier.height(12.dp))
             Button(
                 text = "Retry",
-                onClick = {}
+                onClick = onRetryClick,
             )
         }
     }
