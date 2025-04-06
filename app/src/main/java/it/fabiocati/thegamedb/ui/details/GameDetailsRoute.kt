@@ -7,12 +7,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.annotation.parameters.DeepLink
 import com.ramcosta.composedestinations.generated.destinations.GameDetailsRouteDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import it.fabiocati.thegamedb.utils.extensions.openExternalUrl
 import org.koin.androidx.compose.koinViewModel
 
-@Destination<RootGraph>
+@Destination<RootGraph>(
+    deepLinks = [
+        DeepLink(
+            uriPattern = "app://gamedb.fabiocati.it/{gameId}"
+        )
+    ]
+)
 @Composable
 fun GameDetailsRoute(
     gameId: String,

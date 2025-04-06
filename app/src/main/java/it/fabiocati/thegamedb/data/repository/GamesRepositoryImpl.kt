@@ -59,6 +59,7 @@ private fun GameDetailsDataModel.toModel(): GameDetails {
     val dateOfRelease = this.firstReleaseDate?.let { LocalDate.fromEpochDays(it.toInt() / 60 / 60 / 24) }
     return GameDetails(
         id = this.id.toString(),
+        coverUrl = this.cover?.url?.getImageUrl(),
         name = this.name,
         artworkUrls = artworks,
         dateOfRelease = dateOfRelease,

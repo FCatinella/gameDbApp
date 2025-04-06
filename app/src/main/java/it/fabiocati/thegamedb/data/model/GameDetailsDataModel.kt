@@ -9,6 +9,8 @@ data class GameDetailsDataModel(
     val id: Int,
     @SerialName("name")
     val name: String,
+    @SerialName("cover")
+    val cover: ImageDataModel? = null,
     @SerialName("artworks")
     val artworks: List<ImageDataModel> = emptyList(),
     @SerialName("first_release_date")

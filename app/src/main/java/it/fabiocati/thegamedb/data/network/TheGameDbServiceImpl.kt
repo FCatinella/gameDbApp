@@ -80,6 +80,7 @@ internal class TheGameDbServiceImpl(
                 fields 
                     id,
                     name,
+                    cover.*,
                     artworks.*,
                     involved_companies.company.*,
                     involved_companies.developer,
