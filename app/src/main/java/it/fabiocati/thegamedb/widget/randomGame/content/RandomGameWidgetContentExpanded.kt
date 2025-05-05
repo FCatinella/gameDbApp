@@ -22,6 +22,7 @@ import androidx.glance.text.TextStyle
 import it.fabiocati.thegamedb.R
 import it.fabiocati.thegamedb.domain.model.GameDetails
 import it.fabiocati.thegamedb.widget.randomGame.fakeGame
+import it.fabiocati.thegamedb.widget.randomGame.takeOrFull
 import it.fabiocati.thegamedb.widget.ui.components.AsyncWidgetImage
 
 @Composable
@@ -59,7 +60,7 @@ internal fun RandomGameWidgetContentExpanded(
                 )
                 Spacer(modifier = GlanceModifier.height(2.dp))
                 Text(
-                    text = (game.summary?.take(205) + "..."),
+                    text = (game.summary?.takeOrFull(205) ?: ""),
                     style = TextStyle(
                         color = GlanceTheme.colors.onBackground,
                         fontSize = 12.sp,
