@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.gradle.secrets)
     alias(libs.plugins.ksp)
     alias(libs.plugins.common.config)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
