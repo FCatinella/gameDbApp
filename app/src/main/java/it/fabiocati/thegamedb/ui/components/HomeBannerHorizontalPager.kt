@@ -145,7 +145,7 @@ private data class HomeBannerUiConfig(
 private fun getUiConfig(currentWindowWidthSizeClass: WindowWidthSizeClass) = when (
     currentWindowWidthSizeClass
 ) {
-    WindowWidthSizeClass.Medium -> {
+    WindowWidthSizeClass.Medium, WindowWidthSizeClass.Expanded-> {
         HomeBannerUiConfig(
             cardAspectRatio = 2.5f,
             gameNameTextAlign = TextAlign.Start,

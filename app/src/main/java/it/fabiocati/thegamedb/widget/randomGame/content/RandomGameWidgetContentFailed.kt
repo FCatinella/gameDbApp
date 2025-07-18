@@ -26,7 +26,8 @@ import it.fabiocati.thegamedb.R
 
 @Composable
 internal fun RandomGameWidgetContentFailed(
-    onRetryClick: Action = action {  },
+    errorCause: String,
+    onRetryClick: Action = action { },
 ) {
     Scaffold(
         titleBar = {
@@ -51,6 +52,16 @@ internal fun RandomGameWidgetContentFailed(
                 )
             )
             Spacer(modifier = GlanceModifier.height(12.dp))
+            Text(
+                text = errorCause,
+                style = TextStyle(
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = GlanceTheme.colors.onBackground,
+                    textAlign = TextAlign.Center
+                )
+            )
+            Spacer(modifier = GlanceModifier.height(12.dp))
             Button(
                 text = "Retry",
                 onClick = onRetryClick,
@@ -64,6 +75,8 @@ internal fun RandomGameWidgetContentFailed(
 @Composable
 private fun Preview() {
     GlanceTheme {
-        RandomGameWidgetContentFailed()
+        RandomGameWidgetContentFailed(
+            errorCause = "error"
+        )
     }
 }

@@ -74,6 +74,7 @@ private class RandomGameWidget(
         }.onFailure { ex->
             provideContent {
                 RandomGameWidgetContentFailed(
+                    errorCause = ex.message ?: "",
                     onRetryClick = actionRunCallback<RefreshAction>()
                 )
             }

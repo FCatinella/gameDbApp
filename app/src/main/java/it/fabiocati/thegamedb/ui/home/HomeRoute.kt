@@ -20,7 +20,7 @@ fun HomeRoute(
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
     when (LocalWindowWidthSizeClass.current) {
-        WindowWidthSizeClass.Medium -> {
+        WindowWidthSizeClass.Medium, WindowWidthSizeClass.Expanded -> {
             HomeScreenMedium(
                 uiState = uiState,
                 onGamePressed = { game ->
