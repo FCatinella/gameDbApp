@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">IGDB</string>
-    <string name="most_played">Most played</string>
-    <string name="now_playing">Now playing</string>
-    <string name="most_visited">Most visited</string>
-</resources>
