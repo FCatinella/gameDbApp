@@ -1,7 +1,7 @@
 
 # gameDbApp
 
-A simple Android app to showcase game information using the IGDB API.
+A simple Compose Multiplatform app to showcase game information using the IGDB API.
 
 # Screenshots
 
@@ -15,13 +15,15 @@ A simple Android app to showcase game information using the IGDB API.
 - Dynamic Material 3 colors support
 - Light/Dark mode support
 - Simple Large Display Layout support
+- AppWidget that displays a random game
+- iOS support through Compose Multiplatform
 
 
 ## Setup
 
 To run this project, you'll need to obtain API keys from IGDB and configure them in your project.
 
-#### Obtain API Keys:
+### Obtain API Keys:
 
 [Create an IGDB account and create a new client.](https://api-docs.igdb.com/?shell#getting-started)
 
@@ -30,16 +32,28 @@ You'll receive a `CLIENT_ID` and `CLIENT_SECRET`.
 Generate an AES key for encryption (e.g., using a tool like OpenSSL).
 (Any alpha numeric 32 long string should be fine)
 
-#### Configure API Keys:
+### Configure API Keys:
 
-Add the following lines to local.properties (If not present, create it in the root directory of your project), replacing the placeholders with your actual keys:
+#### Android
+Add the following lines to `local.properties` (If not present, create it in the root directory of your project), replacing the placeholders with your actual keys:
 ```
 CLIENT_ID = ${YOUR_CLIENT_ID}
 CLIENT_SECRET = ${YOUR_CLIENT_SECRET}
 AES_KEY = ${YOUR_AES_KEY}
 ```
 
-Note: Ensure that the local.properties file is excluded from your Git repository to keep your API keys secure.
+Note: Ensure that the `local.properties` file is excluded from your Git repository to keep your API keys secure.
+
+#### iOS
+Create a new file called `Secrets.xcconfig` and place it inside the folder `Configuration` (same folder that contains `Config.xcconfig`)
+Add the following lines to it, replacing the placeholders with your actual keys:
+```
+CLIENT_ID = ${YOUR_CLIENT_ID}
+CLIENT_SECRET = ${YOUR_CLIENT_SECRET}
+```
+
+Note: Ensure that the `Secrets.xcconfig` file is excluded from your Git repository to keep your API keys secure.
+
 
 By following these steps, you should be able to successfully compile and run the project.
 
